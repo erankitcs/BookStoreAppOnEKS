@@ -1,0 +1,3 @@
+npm install -g @angular/cli
+ng new bookstore
+ng serve --open
