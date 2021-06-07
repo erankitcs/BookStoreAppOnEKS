@@ -9,5 +9,5 @@ RUN npm run build
 
 # Stage-2
 FROM nginx:1.20-alpine
-COPY --from=buid /bookstore/dist/bookstore /usr/share/nginx/html
+COPY --from=buid /bookstore/dist /usr/share/nginx/html
 COPY bookstore/nginx.conf /etc/nginx/conf.d/default.conf
