@@ -7,7 +7,7 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
 
-namespace clients_api
+namespace AWS.EKS.Bookstore.Clients_API
 {
     public class Program
     {

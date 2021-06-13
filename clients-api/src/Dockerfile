@@ -1,8 +1,8 @@
 FROM mcr.microsoft.com/dotnet/aspnet:3.1 AS base
 WORKDIR /app
-EXPOSE 5000
+EXPOSE 5003
 
-ENV ASPNETCORE_URLS=http://+:5000
+ENV ASPNETCORE_URLS=http://*:5003
 
 # Creates a non-root user with an explicit UID and adds permission to access the /app folder
 # For more info, please refer to https://aka.ms/vscode-docker-dotnet-configure-containers
@@ -23,4 +23,4 @@ RUN dotnet publish "clients-api.csproj" -c Release -o /app/publish
 FROM base AS final
 WORKDIR /app
 COPY --from=publish /app/publish .
-ENTRYPOINT ["dotnet", "clients-api.dll"]
+ENTRYPOINT ["dotnet", "AWS.EKS.Bookstore.Clients-API.dll"]
