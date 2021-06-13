@@ -11,9 +11,9 @@ USER appuser
 
 FROM mcr.microsoft.com/dotnet/sdk:3.1 AS build
 WORKDIR /src
-COPY ["clients-api.csproj", "clients-api/"]
+COPY ["src/clients-api.csproj", "clients-api/"]
 RUN dotnet restore "clients-api/clients-api.csproj"
-COPY . ./clients-api
+COPY /src ./clients-api
 WORKDIR "/src/clients-api"
 RUN dotnet build "clients-api.csproj" -c Release -o /app/build
 
