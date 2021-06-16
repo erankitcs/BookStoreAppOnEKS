@@ -10,7 +10,7 @@ namespace AWS.EKS.Bookstore.Clients_API.Models
     {
         [DynamoDBHashKey]
         [JsonProperty("_id")]
-        [DynamoDBProperty("id")]
+        [DynamoDBProperty("_id")]
         public string Id { get; set;}
 
         [JsonProperty("Name")]

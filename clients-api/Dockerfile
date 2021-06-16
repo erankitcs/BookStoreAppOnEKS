@@ -1,4 +1,4 @@
-FROM mcr.microsoft.com/dotnet/aspnet:3.1 AS base
+FROM mcr.microsoft.com/dotnet/core/aspnet:3.1 AS base
 WORKDIR /app
 EXPOSE 5003
 
@@ -9,16 +9,16 @@ ENV ASPNETCORE_URLS=http://*:5003
 RUN adduser -u 5678 --disabled-password --gecos "" appuser && chown -R appuser /app
 USER appuser
 
-FROM mcr.microsoft.com/dotnet/sdk:3.1 AS build
+FROM mcr.microsoft.com/dotnet/core/sdk:3.1 AS build
 WORKDIR /src
-COPY ["src/clients-api.csproj", "clients-api/"]
-RUN dotnet restore "clients-api/clients-api.csproj"
+COPY ["src/AWS.EKS.Bookstore.Clients-API.csproj", "clients-api/"]
+RUN dotnet restore "clients-api/AWS.EKS.Bookstore.Clients-API.csproj"
 COPY /src ./clients-api
 WORKDIR "/src/clients-api"
-RUN dotnet build "clients-api.csproj" -c Release -o /app/build
+RUN dotnet build "AWS.EKS.Bookstore.Clients-API.csproj" -c Release -o /app/build
 
 FROM build AS publish
-RUN dotnet publish "clients-api.csproj" -c Release -o /app/publish
+RUN dotnet publish "AWS.EKS.Bookstore.Clients-API.csproj" -c Release -o /app/publish
 
 FROM base AS final
 WORKDIR /app

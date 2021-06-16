@@ -22,7 +22,7 @@ namespace AWS.EKS.Bookstore.Clients_API.Services
         private readonly DynamoDBContext _context;
 
         public ClientService(IDynamoDBSettings settings){
-             _dynamoDBClient = new AmazonDynamoDBClient(RegionEndpoint.USEast2);
+             _dynamoDBClient = new AmazonDynamoDBClient(RegionEndpoint.USWest2);
              var config = new DynamoDBContextConfig { TableNamePrefix = settings.Prefix };
              _context = new DynamoDBContext(_dynamoDBClient, config);
         }
