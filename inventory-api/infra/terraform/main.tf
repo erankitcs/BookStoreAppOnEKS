@@ -6,8 +6,8 @@ provider "aws" {
 module "dynamodb_table" {
   source   = "../../../tf_modules/dynamodb"
   namespace = "development"
-  api_name  = "ClientsApi"
-  table_name = "clients"
+  api_name  = "InventoryApi"
+  table_name = "inventory"
   hash_key = "_id"
   attributes = [
     {
@@ -18,11 +18,11 @@ module "dynamodb_table" {
 }
 
 output "ddb_policy_arn" {
-  description = "ARN of the DynamoDb Policy for Clients API."
+  description = "ARN of the DynamoDb Policy for InventoryApi."
   value       = module.dynamodb_table.ddb_policy_arn
 }
 
 output "ddb_table_arn" {
-  description = "ARN of the DynamoDb Table for Clients API."
+  description = "ARN of the DynamoDb Table for InventoryApi."
   value       = module.dynamodb_table.ddb_table_arn
 }

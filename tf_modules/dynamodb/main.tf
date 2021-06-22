@@ -8,12 +8,6 @@ terraform {
 
   required_version = ">= 0.14.9"
 }
-
-provider "aws" {
-  profile = "default"
-  region  = "us-west-2"
-}
-
 ##### IAM Policy
 resource "aws_iam_policy" "ddb_policy" {
   name        = "${var.namespace}-${var.api_name}Policy"
