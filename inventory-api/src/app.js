@@ -69,3 +69,121 @@ app.post('/register', (request, response) => {
         });
     })
 })
+
+app.get('/list/:resourceId', async (request, response) => {
+    var id = request.params.resourceId;
+    var isAvailableArg = request.params.available;
+    var isAvailable = true
+    if(isAvailableArg != undefined) {
+        isAvailable = (isAvailableArg == 'true')
+    }
+    var params = {
+        TableName: dynamodbTable,
+        ExpressionAttributeValues: {
+            ":r": id,
+            ":a": isAvailable
+        },
+        FilterExpression: "ResourceId = :r and Available = :a"
+    }
+
+    dynamoDb.scan(params, function(err,data) {
+        console.log('data', data)
+        response.json(data)
+    })
+
+})
+
+app.put('/setAvailability/:id', async (request, response) => {
+    var isAvailable = request.body.Available;
+    var id = request.params.id;
+
+    var params = {
+        TableName: dynamodbTable,
+        Key: {
+            "_id": id
+        },
+        UpdateExpression: "SET #available = :a",
+        ExpressionAttributeValues: {
+            ":a": isAvailable 
+        },
+        ExpressionAttributeNames: {
+            "#available": "Available" 
+        }
+    }
+    dynamoDb.update(params, function(err,data) {
+        response.json({ "message": "Updated successully" })
+    })
+})
+
+
+app.get('/summary', function(request, response) {
+    resourceApiListUrl = resourceApiEndpont + "/list"
+    console.log(resourceApiListUrl)
+
+    client = resourceApiListUrl.startsWith("http://") ? http_client : https_client;
+    resourceApiResponse = client.get(resourceApiListUrl, (resp) => {
+        let data = '';
+
+        resp.on('data', (chunk) => {
+            data += chunk;
+        });
+        resp.on('end', () => {
+            console.log(data)
+            let listOfResources = JSON.parse(data)
+            const r = iterateResponsePromise(listOfResources, response)      
+        });
+        resp.on('error', (err) => {
+            console.log(err)
+        });
+        
+    })
+})
+app.use(AWSXRay.express.closeSegment());
+
+async function iterateResponsePromise(listOfResources, response) {
+    async.map(listOfResources.data.data, function(item, callback) {
+        // Set ID
+        var tempObject = {
+            ResourceId: item._id,
+            ResourceName: item.Name,
+            AvailableCopies: 0,
+            UnavailableCopies: 0,
+            TotalCopies: 0
+        }
+
+        var params = {
+            TableName: dynamodbTable,
+            ExpressionAttributeValues: {
+                ":r": item._id,
+                ":a": true 
+            },
+            FilterExpression: "ResourceId = :r and Available = :a"
+        }
+        dynamoDb.scan(params, (err,data) => {
+            
+            tempObject.AvailableCopies = data.Count;
+
+            var paramsUnavailable = {
+                TableName: dynamodbTable,
+                ExpressionAttributeValues: {
+                    ":r": item._id,
+                    ":a": false
+                },
+                FilterExpression: "ResourceId = :r and Available = :a"
+            }
+            dynamoDb.scan(paramsUnavailable, (err,data) => {
+                tempObject.UnavailableCopies = data.Count;
+                tempObject.TotalCopies = tempObject.AvailableCopies + tempObject.UnavailableCopies;
+                callback(null, tempObject);
+            })
+        })
+
+    }, function(err, results){
+        if(err) return console.log(err);
+        response.json(results)
+    })
+}
+
+app.listen(port, () => {
+    console.log('Inventory API Running...');
+})
