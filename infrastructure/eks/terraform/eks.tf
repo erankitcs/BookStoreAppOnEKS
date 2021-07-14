@@ -3,7 +3,7 @@ module "eks" {
   cluster_name    = local.cluster_name
   cluster_version = "1.20"
   subnets         = module.vpc.private_subnets
-
+  enable_irsa     = true
   tags = {
     Environment = "Developement"
   }
