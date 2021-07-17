@@ -80,3 +80,8 @@ nodeSelector: {}
 tolerations: []
 
 affinity: {}
+
+endpoints:
+  inventory: http://inventory-api-service
+  clients: http://clients-api-service
+  resources: http://resource-api-service

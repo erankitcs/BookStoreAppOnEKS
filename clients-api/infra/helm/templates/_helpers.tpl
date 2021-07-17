@@ -1,7 +1,7 @@
 {{/*
 Expand the name of the chart.
 */}}
-{{- define "booksotre-clients-api.name" -}}
+{{- define "bookstore-clients-api.name" -}}
 {{- default .Chart.Name .Values.nameOverride | trunc 63 | trimSuffix "-" }}
 {{- end }}
 
@@ -10,7 +10,7 @@ Create a default fully qualified app name.
 We truncate at 63 chars because some Kubernetes name fields are limited to this (by the DNS naming spec).
 If release name contains chart name it will be used as a full name.
 */}}
-{{- define "booksotre-clients-api.fullname" -}}
+{{- define "bookstore-clients-api.fullname" -}}
 {{- if .Values.fullnameOverride }}
 {{- .Values.fullnameOverride | trunc 63 | trimSuffix "-" }}
 {{- else }}
@@ -26,16 +26,16 @@ If release name contains chart name it will be used as a full name.
 {{/*
 Create chart name and version as used by the chart label.
 */}}
-{{- define "booksotre-clients-api.chart" -}}
+{{- define "bookstore-clients-api.chart" -}}
 {{- printf "%s-%s" .Chart.Name .Chart.Version | replace "+" "_" | trunc 63 | trimSuffix "-" }}
 {{- end }}
 
 {{/*
 Common labels
 */}}
-{{- define "booksotre-clients-api.labels" -}}
-booksotre-clients-api.sh/chart: {{ include "booksotre-clients-api.chart" . }}
-{{ include "booksotre-clients-api.selectorLabels" . }}
+{{- define "bookstore-clients-api.labels" -}}
+bookstore-clients-api.sh/chart: {{ include "bookstore-clients-api.chart" . }}
+{{ include "bookstore-clients-api.selectorLabels" . }}
 {{- if .Chart.AppVersion }}
 app.kubernetes.io/version: {{ .Chart.AppVersion | quote }}
 {{- end }}
@@ -45,17 +45,17 @@ app.kubernetes.io/managed-by: {{ .Release.Service }}
 {{/*
 Selector labels
 */}}
-{{- define "booksotre-clients-api.selectorLabels" -}}
-app.kubernetes.io/name: {{ include "booksotre-clients-api.name" . }}
+{{- define "bookstore-clients-api.selectorLabels" -}}
+app.kubernetes.io/name: {{ include "bookstore-clients-api.name" . }}
 app.kubernetes.io/instance: {{ .Release.Name }}
 {{- end }}
 
 {{/*
 Create the name of the service account to use
 */}}
-{{- define "booksotre-clients-api.serviceAccountName" -}}
+{{- define "bookstore-clients-api.serviceAccountName" -}}
 {{- if .Values.serviceAccount.create }}
-{{- default (include "booksotre-clients-api.fullname" .) .Values.serviceAccount.name }}
+{{- default (include "bookstore-clients-api.fullname" .) .Values.serviceAccount.name }}
 {{- else }}
 {{- default "default" .Values.serviceAccount.name }}
 {{- end }}

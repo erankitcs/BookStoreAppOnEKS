@@ -1,17 +1,17 @@
 apiVersion: apps/v1beta2
 kind: Deployment
 metadata:
-  name: {{ include "booksotre-clients-api.fullname" . }}
+  name: {{ include "bookstore-clients-api.fullname" . }}
   namespace: {{ .Release.Namespace }}
   labels:
-    {{- include "booksotre-clients-api.labels" . | nindent 4 }}
+    {{- include "bookstore-clients-api.labels" . | nindent 4 }}
 spec:
   {{- if not .Values.autoscaling.enabled }}
   replicas: {{ .Values.replicaCount }}
   {{- end }}
   selector:
     matchLabels:
-      {{- include "booksotre-clients-api.selectorLabels" . | nindent 6 }}
+      {{- include "bookstore-clients-api.selectorLabels" . | nindent 6 }}
   template:
     metadata:
       {{- with .Values.podAnnotations }}
@@ -19,13 +19,13 @@ spec:
         {{- toYaml . | nindent 8 }}
       {{- end }}
       labels:
-        {{- include "booksotre-clients-api.selectorLabels" . | nindent 8 }}
+        {{- include "bookstore-clients-api.selectorLabels" . | nindent 8 }}
     spec:
       {{- with .Values.imagePullSecrets }}
       imagePullSecrets:
         {{- toYaml . | nindent 8 }}
       {{- end }}
-      serviceAccountName: {{ include "booksotre-clients-api.serviceAccountName" . }}
+      serviceAccountName: {{ include "bookstore-clients-api.serviceAccountName" . }}
       securityContext:
         {{- toYaml .Values.podSecurityContext | nindent 8 }}
       containers:

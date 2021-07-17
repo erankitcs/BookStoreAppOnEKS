@@ -80,3 +80,6 @@ nodeSelector: {}
 tolerations: []
 
 affinity: {}
+
+resourceapi:
+  endpoint: http://resource-api-service
