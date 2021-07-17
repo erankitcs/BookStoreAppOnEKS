@@ -28,6 +28,10 @@ spec:
       serviceAccountName: {{ include "bookstore-front-end.serviceAccountName" . }}
       securityContext:
         {{- toYaml .Values.podSecurityContext | nindent 8 }}
+      volumes:
+        - name: {{ template "bookstore-front-end.fullname" . }}-config-file
+          secret:
+            secretName: {{ template "bookstore-front-end.fullname" . }}-config-file
       containers:
         - name: {{ .Chart.Name }}
           securityContext:

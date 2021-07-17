@@ -1,16 +1,20 @@
 apiVersion: v1
 kind: Service
 metadata:
-  name: {{ include "bookstore-front-end.name" . }}-proxy-service
+  name: {{ template "bookstore-front-end.name" . }}-proxy-service
   namespace: {{ .Release.Namespace }}
   labels:
-    {{- include "bookstore-front-end-proxy.labels" . | nindent 4 }}
+    app: {{ template "bookstore-front-end.name" . }}-proxy
+    chart: {{ template "bookstore-front-end.chart" . }}-proxy
+    release: {{ .Release.Name }}-proxy
+    heritage: {{ .Release.Service }}
 spec:
   type: {{ .Values.service.type }}
   ports:
-    - port: {{ .Values.service.port }}
+    - port: 80
       targetPort: http
       protocol: TCP
       name: http
   selector:
-    {{- include "bookstore-front-end-proxy.selectorLabels" . | nindent 4 }}
+    app: {{ template "bookstore-front-end.name" . }}-proxy
+    release: {{ .Release.Name }}
