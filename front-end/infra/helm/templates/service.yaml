@@ -1,7 +1,7 @@
 apiVersion: v1
 kind: Service
 metadata:
-  name: {{ include "booksotre-front-end.fullname" . }}-proxy
+  name: {{ include "booksotre-front-end.name" . }}-service
   labels:
     {{- include "booksotre-front-end.labels" . | nindent 4 }}
 spec:

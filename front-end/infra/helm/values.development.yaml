@@ -1,0 +1,7 @@
+# NOTE: When installing, please, update this file with the correct subdomain!
+
+image:
+  repository: erankitcs/bookstoreapp_front-end
+
+api:
+  url: https://api.dev.techenvision.net

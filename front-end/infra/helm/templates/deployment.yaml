@@ -1,7 +1,7 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: {{ include "booksotre-front-end.fullname" . }}
+  name: {{ include "booksotre-front-end.name" . }}
   namespace: {{ .Release.Namespace }}
   labels:
     {{- include "booksotre-front-end.labels" . | nindent 4 }}
