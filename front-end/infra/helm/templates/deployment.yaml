@@ -1,17 +1,17 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: {{ include "booksotre-front-end.name" . }}
+  name: {{ include "bookstore-front-end.name" . }}
   namespace: {{ .Release.Namespace }}
   labels:
-    {{- include "booksotre-front-end.labels" . | nindent 4 }}
+    {{- include "bookstore-front-end.labels" . | nindent 4 }}
 spec:
   {{- if not .Values.autoscaling.enabled }}
   replicas: {{ .Values.replicaCount }}
   {{- end }}
   selector:
     matchLabels:
-      {{- include "booksotre-front-end.selectorLabels" . | nindent 6 }}
+      {{- include "bookstore-front-end.selectorLabels" . | nindent 6 }}
   template:
     metadata:
       {{- with .Values.podAnnotations }}
@@ -19,13 +19,13 @@ spec:
         {{- toYaml . | nindent 8 }}
       {{- end }}
       labels:
-        {{- include "booksotre-front-end.selectorLabels" . | nindent 8 }}
+        {{- include "bookstore-front-end.selectorLabels" . | nindent 8 }}
     spec:
       {{- with .Values.imagePullSecrets }}
       imagePullSecrets:
         {{- toYaml . | nindent 8 }}
       {{- end }}
-      serviceAccountName: {{ include "booksotre-front-end.serviceAccountName" . }}
+      serviceAccountName: {{ include "bookstore-front-end.serviceAccountName" . }}
       securityContext:
         {{- toYaml .Values.podSecurityContext | nindent 8 }}
       containers:
@@ -39,7 +39,7 @@ spec:
               containerPort: {{ .Values.service.port }}
               protocol: TCP
           volumeMounts:
-            - name: {{ template "booksotre-front-end.fullname" . }}-config-file
+            - name: {{ template "bookstore-front-end.fullname" . }}-config-file
               mountPath: /usr/share/nginx/html/assets/json/config.json
               subPath: config.json
 #          livenessProbe:

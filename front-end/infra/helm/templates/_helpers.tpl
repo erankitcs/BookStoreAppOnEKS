@@ -1,7 +1,7 @@
 {{/*
 Expand the name of the chart.
 */}}
-{{- define "booksotre-front-end.name" -}}
+{{- define "bookstore-front-end.name" -}}
 {{- default .Chart.Name .Values.nameOverride | trunc 63 | trimSuffix "-" }}
 {{- end }}
 
@@ -10,7 +10,7 @@ Create a default fully qualified app name.
 We truncate at 63 chars because some Kubernetes name fields are limited to this (by the DNS naming spec).
 If release name contains chart name it will be used as a full name.
 */}}
-{{- define "booksotre-front-end.fullname" -}}
+{{- define "bookstore-front-end.fullname" -}}
 {{- if .Values.fullnameOverride }}
 {{- .Values.fullnameOverride | trunc 63 | trimSuffix "-" }}
 {{- else }}
@@ -26,16 +26,16 @@ If release name contains chart name it will be used as a full name.
 {{/*
 Create chart name and version as used by the chart label.
 */}}
-{{- define "booksotre-front-end.chart" -}}
+{{- define "bookstore-front-end.chart" -}}
 {{- printf "%s-%s" .Chart.Name .Chart.Version | replace "+" "_" | trunc 63 | trimSuffix "-" }}
 {{- end }}
 
 {{/*
 Common labels
 */}}
-{{- define "booksotre-front-end.labels" -}}
-booksotre-front-end.sh/chart: {{ include "booksotre-front-end.chart" . }}
-{{ include "booksotre-front-end.selectorLabels" . }}
+{{- define "bookstore-front-end.labels" -}}
+bookstore-front-end.sh/chart: {{ include "bookstore-front-end.chart" . }}
+{{ include "bookstore-front-end.selectorLabels" . }}
 {{- if .Chart.AppVersion }}
 app.kubernetes.io/version: {{ .Chart.AppVersion | quote }}
 {{- end }}
@@ -45,15 +45,15 @@ app.kubernetes.io/managed-by: {{ .Release.Service }}
 {{/*
 Selector labels
 */}}
-{{- define "booksotre-front-end.selectorLabels" -}}
-app.kubernetes.io/name: {{ include "booksotre-front-end.name" . }}
+{{- define "bookstore-front-end.selectorLabels" -}}
+app.kubernetes.io/name: {{ include "bookstore-front-end.name" . }}
 app.kubernetes.io/instance: {{ .Release.Name }}
 {{- end }}
 
 {{/*
 Create the name of the service account to use
 */}}
-{{- define "booksotre-front-end.serviceAccountName" -}}
+{{- define "bookstore-front-end.serviceAccountName" -}}
 {{- if .Values.serviceAccount.create }}
 {{- $saname := default (include "bookstore-clients-api.name" .) .Values.serviceAccount.name }}
 {{- printf "%s-%s" $saname "service-account" | trunc 63 | trimSuffix "-" }}
@@ -65,9 +65,9 @@ Create the name of the service account to use
 {{/*
 Common labels - Proxy
 */}}
-{{- define "booksotre-front-end-proxy.labels" -}}
-booksotre-front-end.sh/chart: {{ include "booksotre-front-end.chart" . }}-proxy
-{{ include "booksotre-front-end-proxy.selectorLabels" . }}
+{{- define "bookstore-front-end-proxy.labels" -}}
+bookstore-front-end.sh/chart: {{ include "bookstore-front-end.chart" . }}-proxy
+{{ include "bookstore-front-end-proxy.selectorLabels" . }}
 {{- if .Chart.AppVersion }}
 app.kubernetes.io/version: {{ .Chart.AppVersion | quote }}-proxy
 {{- end }}
@@ -77,7 +77,7 @@ app.kubernetes.io/managed-by: {{ .Release.Service }}-proxy
 {{/*
 Selector labels - Proxy
 */}}
-{{- define "booksotre-front-end-proxy.selectorLabels" -}}
-app.kubernetes.io/name: {{ include "booksotre-front-end.name" . }}-proxy
+{{- define "bookstore-front-end-proxy.selectorLabels" -}}
+app.kubernetes.io/name: {{ include "bookstore-front-end.name" . }}-proxy
 app.kubernetes.io/instance: {{ .Release.Name }}
 {{- end }}

@@ -1,24 +1,24 @@
-apiVersion: apps/v1beta2
+apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: {{ template "booksotre-front-end.name" . }}-proxy
+  name: {{ template "bookstore-front-end.name" . }}-proxy
   namespace: {{ .Release.Namespace }}
   labels:
-    {{- include "booksotre-front-end-proxy.labels" . | nindent 4 }}
+    {{- include "bookstore-front-end-proxy.labels" . | nindent 4 }}
 spec:
   replicas: {{ .Values.replicaCount }}
   selector:
     matchLabels:
-      {{- include "booksotre-front-end-proxy.selectorLabels" . | nindent 6 }}
+      {{- include "bookstore-front-end-proxy.selectorLabels" . | nindent 6 }}
   template:
     metadata:
       labels:
-        {{- include "booksotre-front-end-proxy.selectorLabels" . | nindent 8 }}
+        {{- include "bookstore-front-end-proxy.selectorLabels" . | nindent 8 }}
     spec:
       volumes:
-      - name: {{ template "booksotre-front-end.name" . }}-proxy-config
+      - name: {{ template "bookstore-front-end.name" . }}-proxy-config
         configMap:
-          name: {{ template "booksotre-front-end.name" . }}-proxy-config
+          name: {{ template "bookstore-front-end.name" . }}-proxy-config
       containers:
         - name: {{ .Chart.Name }}-proxy
           image: "nginx"
@@ -28,7 +28,7 @@ spec:
               containerPort: {{ .Values.service.port }}
               protocol: TCP
           volumeMounts:
-            - name: {{ template "booksotre-front-end.name" . }}-proxy-config
+            - name: {{ template "bookstore-front-end.name" . }}-proxy-config
               mountPath: /etc/nginx/conf.d/default.conf
               subPath: default.conf
       resources:
