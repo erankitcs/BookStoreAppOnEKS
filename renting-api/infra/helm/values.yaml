@@ -5,10 +5,10 @@
 replicaCount: 1
 
 image:
-  repository: nginx
+  repository: erankitcs/bookstoreapp_renting-api
   pullPolicy: IfNotPresent
   # Overrides the image tag whose default is the chart appVersion.
-  tag: ""
+  tag: "latest"
 
 imagePullSecrets: []
 nameOverride: ""
@@ -18,7 +18,9 @@ serviceAccount:
   # Specifies whether a service account should be created
   create: true
   # Annotations to add to the service account
-  annotations: {}
+  annotations: {
+  eks.amazonaws.com/role-arn: arn:aws:iam::319794837620:role/bookstore-eks-X7b6Bawd-sa-renting-api-role
+  }
   # The name of the service account to use.
   # If not set and create is true, a name is generated using the fullname template
   name: ""
@@ -37,8 +39,8 @@ securityContext: {}
   # runAsUser: 1000
 
 service:
-  type: ClusterIP
-  port: 80
+  type: NodePort
+  port: 5004
 
 ingress:
   enabled: false
@@ -85,3 +87,7 @@ endpoints:
   inventory: http://inventory-api-service
   clients: http://clients-api-service
   resources: http://resource-api-service
+aws:
+  region: us-west-2
+test: 
+  enabled: false

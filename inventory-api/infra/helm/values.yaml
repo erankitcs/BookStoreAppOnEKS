@@ -85,3 +85,5 @@ affinity: {}
 
 resourceapi:
   endpoint: http://resource-api-service
+test: 
+  enabled: false
