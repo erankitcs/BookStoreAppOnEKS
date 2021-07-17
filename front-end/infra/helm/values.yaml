@@ -80,3 +80,6 @@ nodeSelector: {}
 tolerations: []
 
 affinity: {}
+
+api:
+  url: https://api.dev.techenvision.net

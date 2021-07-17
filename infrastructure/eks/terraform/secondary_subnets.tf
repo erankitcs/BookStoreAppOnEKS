@@ -86,7 +86,7 @@ resource "aws_route" "route_b" {
 }
 
 resource "aws_route" "route_c" {
-  route_table_id            = aws_route_table.secondary_route_b.id
+  route_table_id            = aws_route_table.secondary_route_c.id
   destination_cidr_block    = "0.0.0.0/0"
   nat_gateway_id            = module.vpc.natgw_ids[0]
 }

@@ -17,9 +17,10 @@ module "eks" {
   worker_groups = [
     {
       name                          = "worker-group-1"
-      instance_type                 = "t2.micro"
+      instance_type                 = "t2.medium"
       additional_userdata           = "echo ${local.cluster_name} - WG-1"
-      asg_desired_capacity          = 2
+      asg_desired_capacity          = 3
+      asg_max_size                  = 5
       additional_security_group_ids = [aws_security_group.worker_group_mgmt_one.id]
     },
 /*    {
@@ -30,6 +31,7 @@ module "eks" {
       asg_desired_capacity          = 1
     }, */
   ]
+  workers_additional_policies       = [aws_iam_policy.extenaldnspolicy.arn,aws_iam_policy.albcontrollerpolicy.arn]
 }
 
 data "aws_eks_cluster" "cluster" {
