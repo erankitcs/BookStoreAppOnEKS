@@ -32,7 +32,7 @@ ingress:
       kubernetes.io/ingress.class: alb
       alb.ingress.kubernetes.io/scheme: internet-facing
       alb.ingress.kubernetes.io/actions.redirect: "{\"Type\": \"redirect\", \"RedirectConfig\": {\"Protocol\": \"HTTP\", \"Port\": \"80\", \"StatusCode\": \"HTTP_301\"}}"
-      alb.ingress.kubernetes.io/listen-ports: "[{\"HTTP\":80,\"HTTPS\": 443}]"
+      alb.ingress.kubernetes.io/listen-ports: "[{\"HTTP\":80}]"
       alb.ingress.kubernetes.io/load-balancer-attributes: "idle_timeout.timeout_seconds=360"
     path: /
     hosts:
@@ -41,5 +41,5 @@ ingress:
         port: 80
 
       - hostname: api.dev.techenvision.net
-        serviceName: bookstore-front-end-service-proxy
+        serviceName: bookstore-front-end-proxy-service
         port: 80
