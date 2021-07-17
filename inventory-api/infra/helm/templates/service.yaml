@@ -1,7 +1,7 @@
 apiVersion: v1
 kind: Service
 metadata:
-  name: {{ include "bookstore-inventory-api.fullname" . }}
+  name: {{ include "bookstore-inventory-api.name" . }}-service
   labels:
     {{- include "bookstore-inventory-api.labels" . | nindent 4 }}
 spec:

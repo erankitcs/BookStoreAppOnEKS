@@ -1,7 +1,7 @@
 apiVersion: apps/v1beta2
 kind: Deployment
 metadata:
-  name: {{ include "bookstore-inventory-api.fullname" . }}
+  name: {{ include "bookstore-inventory-api.name" . }}
   namespace: {{ .Release.Namespace }}
   labels:
     {{- include "bookstore-inventory-api.labels" . | nindent 4 }}
