@@ -55,7 +55,8 @@ Create the name of the service account to use
 */}}
 {{- define "bookstore-clients-api.serviceAccountName" -}}
 {{- if .Values.serviceAccount.create }}
-{{- default (include "bookstore-clients-api.fullname" .) .Values.serviceAccount.name }}
+{{- $saname := default (include "bookstore-clients-api.name" .) .Values.serviceAccount.name }}
+{{- printf "%s-%s" $saname "service-account" | trunc 63 | trimSuffix "-" }}
 {{- else }}
 {{- default "default" .Values.serviceAccount.name }}
 {{- end }}
