@@ -1,4 +1,4 @@
-resource "aws_codecommit_repository" "resource_api_codecommit" {
-  repository_name = "bookstore-resource-api"
-  description     = "This is the BookStore App Resource API Repository"
+resource "aws_codecommit_repository" "codecommit" {
+  repository_name = "bookstore-${var.app_name}"
+  description     = "This is the BookStore App ${var.app_name} Repository"
 }
