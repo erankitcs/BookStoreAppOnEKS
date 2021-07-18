@@ -13,8 +13,8 @@ phases:
   build:  
     commands:
       - docker build -t ${APP}:${TAG} -f Dockerfile .
-      - docker tag ${APP}:${TAG} ${ECR_URL}/${ECR_REPO_NAME}:${TAG}
+      - docker tag ${APP}:${TAG} ${ECR_URL}:${TAG}
   post_build:
     commands:
-      - docker push ${ECR_URL}/${ECR_REPO_NAME}:${TAG}
+      - docker push ${ECR_URL}:${TAG}
       
