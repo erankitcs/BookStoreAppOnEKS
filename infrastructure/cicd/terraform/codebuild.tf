@@ -42,6 +42,20 @@ resource "aws_iam_role_policy" "codebuild_policy" {
                         {
                             "Effect": "Allow",
                             "Resource": [
+                              "${aws_s3_bucket.codepipeline_bucket.arn}",
+                              "${aws_s3_bucket.codepipeline_bucket.arn}/*"
+                            ],
+                            "Action": [
+                                "s3:PutObject",
+                                "s3:GetObject",
+                                "s3:GetObjectVersion",
+                                "s3:GetBucketAcl",
+                                "s3:GetBucketLocation"
+                            ]
+                        },
+                        {
+                            "Effect": "Allow",
+                            "Resource": [
                                      "${aws_codecommit_repository.codecommit.arn}"
                             ],
                             "Action": [
@@ -85,10 +99,6 @@ resource "aws_codebuild_project" "codebuild" {
       value = aws_ecr_repository.ecr.repository_url
     }
     environment_variable {
-      name  = "ECR_REPO_NAME"
-      value = aws_ecr_repository.ecr.name
-    }
-    environment_variable {
       name  = "AWS_DEFAULT_REGION"
       value = data.aws_region.current.name
     }
@@ -97,6 +107,47 @@ resource "aws_codebuild_project" "codebuild" {
     type            = "CODECOMMIT"
     location        = aws_codecommit_repository.codecommit.clone_url_http
     buildspec       = var.buildspec_location
+  }
+  source_version    = var.code_commit_branch
+  tags = {
+    Environment = var.environment
+  }
+}
+
+
+resource "aws_codebuild_project" "codebuilddevdeployment" {
+  name          = "bookstore-development-deploy-${var.app_name}"
+  description   = "CodeBuild project for Deployment the App- ${var.app_name} in Development Namespace."
+  build_timeout = "60"
+  queued_timeout = "480"
+  service_role  = aws_iam_role.codebuild_iam.arn
+  artifacts {
+    type = "NO_ARTIFACTS"
+  }
+  badge_enabled = false
+  environment {
+    compute_type                = "LINUX_CONTAINER"
+    image                       = "aws/codebuild/amazonlinux2-x86_64-standard:3.0"
+    type                        = "LINUX_CONTAINER"
+    image_pull_credentials_type = "CODEBUILD"
+    privileged_mode             = true
+    environment_variable {
+      name  = "ECR_URL"
+      value = aws_ecr_repository.ecr.repository_url
+    }
+    environment_variable {
+      name  = "AWS_DEFAULT_REGION"
+      value = data.aws_region.current.name
+    }
+    environment_variable {
+      name  = "EKS_CLUSTER_NAME"
+      value = data.terraform_remote_state.eks_cluster.outputs.cluster_name
+    }
+  }
+  source {
+    type            = "CODECOMMIT"
+    location        = aws_codecommit_repository.codecommit.clone_url_http
+    buildspec       = var.devdeployspec_location
   }
   source_version    = var.code_commit_branch
   tags = {

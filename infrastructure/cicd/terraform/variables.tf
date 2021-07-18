@@ -10,14 +10,22 @@ variable "app_name" {
     type = string
 }
 
+variable "code_commit_branch" {
+    description = "Branch to use for CI/CD Pipeline."
+    default = "master"
+    type = string
+}
+
 variable "buildspec_location" {
     description = "Buil Spec File Location"
     default = "infra/codebuild/buildspec.yml"
     type = string
 }
 
-variable "code_commit_branch" {
-    description = "Branch to use for CI/CD Pipeline."
-    default = "master"
+variable "devdeployspec_location" {
+    description = "Develoment Deploy Build Spec Location."
+    default = "infra/codebuild/development/buildspec.yml"
     type = string
 }
+
+

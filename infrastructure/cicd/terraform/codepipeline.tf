@@ -16,56 +16,6 @@ resource "aws_iam_role" "codepipeline_role" {
 }
 EOF
 }
-resource "random_string" "bucket_suffix" {
-  length  = 8
-  special = false
-}
-
-resource "aws_s3_bucket" "codepipeline_bucket" {
-  bucket = "bookstore-codepipeline-${var.app_name}-${random_string.bucket_suffix.result}"
-  acl    = "private"
-}
-
-resource "aws_s3_bucket_policy" "codepipeline_bucket_policy" {
-  bucket = aws_s3_bucket.codepipeline_bucket.id
-
-  # Terraform's "jsonencode" function converts a
-  # Terraform expression's result to valid JSON syntax.
-  policy = jsonencode({
-    Version = "2012-10-17"
-    Id      = "SSEAndSSLPolicy"
-    Statement = [
-      {
-        Sid       = "DenyUnEncryptedObjectUploads"
-        Effect    = "Deny"
-        Principal = "*"
-        Action    = "s3:PutObject"
-        Resource = [
-          "${aws_s3_bucket.codepipeline_bucket.arn}/*",
-        ]
-        Condition = {
-          StringNotEquals = {
-            "s3:x-amz-server-side-encryption" = "aws:kms"
-          }
-        }
-      },
-      {
-        Sid       = "DenyInsecureConnections"
-        Effect    = "Deny"
-        Principal = "*"
-        Action    = "s3:*"
-        Resource = [
-          "${aws_s3_bucket.codepipeline_bucket.arn}/*",
-        ]
-        Condition = {
-          Bool = {
-            "aws:SecureTransport" = "false"
-          }
-        }
-      }
-    ]
-  })
-}
 
 resource "aws_iam_role_policy" "codepipeline_policy" {
   name = "codepipeline-${var.app_name}"
@@ -236,10 +186,10 @@ resource "aws_cloudwatch_event_rule" "codecommit_rule" {
 {
   "source": ["aws.codecommit"],
   "detail-type": ["CodeCommit Repository State Change"],
-  "resources": "${aws_codecommit_repository.codecommit.arn}"
+  "resources": ["${aws_codecommit_repository.codecommit.arn}"],
   "detail": {
    "event": ["referenceCreated","referenceUpdated"],
-   "referenceType": ["branch"]
+   "referenceType": ["branch"],
    "referenceName": ["${var.code_commit_branch}"]
    }
 }
@@ -250,7 +200,7 @@ resource "aws_cloudwatch_event_target" "codecommit_rule_target" {
   rule      = aws_cloudwatch_event_rule.codecommit_rule.name
   target_id = "TriggerCodePipeline"
   arn       = aws_codepipeline.codepipeline.arn
-  role_arn  = aws_iam_role.cloudwatch_target_role.id
+  role_arn  = aws_iam_role.cloudwatch_target_role.arn
 }
 
 resource "aws_iam_role" "cloudwatch_target_role" {
@@ -306,12 +256,12 @@ resource "aws_codepipeline" "codepipeline" {
       provider         = "CodeCommit"
       version          = "1"
       output_artifacts = ["SourceArtifact"]
-      region           = aws_region.current.name
+      region           = data.aws_region.current.name
       namespace        = "SourceVariables"
       run_order        = 1
       configuration = {
         PollForSourceChanges    = false
-        RepositoryName = aws_codecommit_repository.codecommit.name
+        RepositoryName = aws_codecommit_repository.codecommit.repository_name
         BranchName       = var.code_commit_branch 
       }
     }
@@ -332,29 +282,8 @@ resource "aws_codepipeline" "codepipeline" {
       configuration = {
         ProjectName = aws_codebuild_project.codebuild.name
       }
-      region           = aws_region.current.name
+      region           = data.aws_region.current.name
       namespace        = "BuildVariables"
-    }
-  }
-
-  stage {
-    name = "Deploy"
-
-    action {
-      name            = "Deploy"
-      category        = "Deploy"
-      owner           = "AWS"
-      provider        = "CloudFormation"
-      input_artifacts = ["build_output"]
-      version         = "1"
-
-      configuration = {
-        ActionMode     = "REPLACE_ON_FAILURE"
-        Capabilities   = "CAPABILITY_AUTO_EXPAND,CAPABILITY_IAM"
-        OutputFileName = "CreateStackOutput.json"
-        StackName      = "MyStack"
-        TemplatePath   = "build_output::sam-templated.yaml"
-      }
     }
   }
 }
