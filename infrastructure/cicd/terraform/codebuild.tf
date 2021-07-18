@@ -98,7 +98,7 @@ resource "aws_codebuild_project" "codebuild" {
     location        = aws_codecommit_repository.codecommit.clone_url_http
     buildspec       = var.buildspec_location
   }
-  source_version = "master"
+  source_version    = var.code_commit_branch
   tags = {
     Environment = var.environment
   }

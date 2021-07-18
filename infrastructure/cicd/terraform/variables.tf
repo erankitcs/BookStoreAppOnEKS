@@ -16,4 +16,8 @@ variable "buildspec_location" {
     type = string
 }
 
-
+variable "code_commit_branch" {
+    description = "Branch to use for CI/CD Pipeline."
+    default = "master"
+    type = string
+}
