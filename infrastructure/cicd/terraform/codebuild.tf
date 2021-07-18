@@ -22,10 +22,11 @@ resource "aws_iam_role_policy" "codebuild_policy" {
   name = "codebuild-policy-${var.app_name}"
   policy = <<POLICY
 {
+                    "Version": "2012-10-17",
+                    "Statement": [
+                        {
                             "Effect": "Allow",
-                            "Resource": [
-                                { "Fn::Sub": "arn:aws:logs:${data.aws_region.current.name}:${data.aws_caller_identity.current.account_id}:log-group:/aws/codebuild/bookstore-${var.app_name}"},
-                                { "Fn::Sub": "arn:aws:logs:${data.aws_region.current.name}:${data.aws_caller_identity.current.account_id}:log-group:/aws/codebuild/bookstore-${var.app_name}:*"}
+                            "Resource": ["arn:aws:logs:${data.aws_region.current.name}:${data.aws_caller_identity.current.account_id}:log-group:/aws/codebuild/bookstore-${var.app_name}","arn:aws:logs:${data.aws_region.current.name}:${data.aws_caller_identity.current.account_id}:log-group:/aws/codebuild/bookstore-${var.app_name}:*"
                             ],
                             "Action": [
                                 "logs:CreateLogGroup",
@@ -41,7 +42,7 @@ resource "aws_iam_role_policy" "codebuild_policy" {
                         {
                             "Effect": "Allow",
                             "Resource": [
-                                { "Fn::GetAtt": [ "CodeCommitRepository", "Arn" ]}
+                                     "${aws_codecommit_repository.codecommit.arn}"
                             ],
                             "Action": [
                                 "codecommit:GitPull"
@@ -55,11 +56,10 @@ resource "aws_iam_role_policy" "codebuild_policy" {
                                 "codebuild:UpdateReport",
                                 "codebuild:BatchPutTestCases"
                             ],
-                            "Resource": [
-                                { "Fn::Sub": "arn:aws:codebuild:${data.aws_region.current.name}:${data.aws_caller_identity.current.account_id}:report-group/bookstore-${var.app_name}-*" }
-                            ]
+                            "Resource": "arn:aws:codebuild:${data.aws_region.current.name}:${data.aws_caller_identity.current.account_id}:report-group/bookstore-${var.app_name}-*"
                         }
                     ]
+}
 POLICY
 }
 
