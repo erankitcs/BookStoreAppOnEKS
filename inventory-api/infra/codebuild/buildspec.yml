@@ -2,7 +2,7 @@ version: 0.2
 
 env:
   variables:
-    APP: resources-api
+    APP: inventory-api
 phases:
   pre_build:
     commands:
@@ -12,7 +12,7 @@ phases:
       - aws ecr get-login-password --region ${AWS_DEFAULT_REGION}  | docker login --username AWS --password-stdin ${ECR_URL}
   build:  
     commands:
-      - docker build -t ${APP}:${TAG} -f Dockerfile .
+      - docker build -t ${APP}:${TAG} -f src/Dockerfile src
       - docker tag ${APP}:${TAG} ${ECR_URL}:${TAG}
   post_build:
     commands:

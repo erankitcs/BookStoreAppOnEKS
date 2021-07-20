@@ -2,7 +2,7 @@ version: 0.2
 
 env:
   variables:
-    APP: resources-api
+    APP: clients-api
 phases:
   pre_build:
     commands:
