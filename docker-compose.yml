@@ -11,7 +11,7 @@ services:
             AWS_SECRET_ACCESS_KEY: ${AWS_SECRET_ACCESS_KEY}
             AWS_XRAY_SDK_ENABLED: "false"
     inventory-api:
-        image: erankitcs/inventorytestapi
+        build: ./inventory-api/src
         ports: 
             - "5001:5001"
         links:
