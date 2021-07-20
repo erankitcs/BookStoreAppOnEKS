@@ -23,6 +23,12 @@ module "cicd_clients_api" {
   app_name = "clients-api"
 }
 
+module "cicd_front_end" {
+  source   = "../../../tf_modules/cicd"
+  app_name = "front-end"
+}
+
+
 output "cicd_resource_api_repository_url" {
   description = "URL of Code Commit Repository for Resource API."
   value       = module.cicd_resource_api.repository_url
@@ -61,4 +67,14 @@ output "cicd_clients_api_repository_url" {
 output "cicd_clients_api_ecr" {
   description = "URL of the ECR for Clients API."
   value       = module.cicd_clients_api.ecr_url
+}
+
+output "cicd_cicd_front_end_repository_url" {
+  description = "URL of Code Commit Repository for Front End."
+  value       = module.cicd_front_end.repository_url
+}
+
+output "cicd_front_end_ecr" {
+  description = "URL of the ECR for Front End."
+  value       = module.cicd_front_end.ecr_url
 }

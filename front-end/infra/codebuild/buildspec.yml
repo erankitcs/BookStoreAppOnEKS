@@ -1,0 +1,19 @@
+version: 0.2
+
+env:
+  variables:
+    APP: front-end
+phases:
+  pre_build:
+    commands:
+      - source `pwd`/version
+      - COMMIT_ID_SHORT=`echo "${CODEBUILD_RESOLVED_SOURCE_VERSION}" | cut -c1-8`
+      - TAG=`echo "${MAJOR}.${MINOR}.${COMMIT_ID_SHORT}"`
+      - aws ecr get-login-password --region ${AWS_DEFAULT_REGION}  | docker login --username AWS --password-stdin ${ECR_URL}
+  build:  
+    commands:
+      - docker build -t ${APP}:${TAG} -f Dockerfile .
+      - docker tag ${APP}:${TAG} ${ECR_URL}:${TAG}
+  post_build:
+    commands:
+      - docker push ${ECR_URL}:${TAG}
