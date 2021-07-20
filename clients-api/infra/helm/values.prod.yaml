@@ -1,0 +1,5 @@
+image:
+  repository: erankitcs/bookstoreapp_clients-api
+
+aspnet:
+  environment: Production
