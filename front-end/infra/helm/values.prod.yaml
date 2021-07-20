@@ -1,0 +1,4 @@
+image:
+  repository: erankitcs/bookstoreapp_front-end
+api:
+  url: https://api.dev.techenvision.net

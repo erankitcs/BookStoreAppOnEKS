@@ -1,11 +1,5 @@
-variable "domain_name" {
-    description = "Domain name for ACM to use."
-    default = "dev.techenvision.net"
+variable "hosted_zone" {
+    description = "Hosted Zone name for ACM and DNS."
+    //default = "techenvision.net"
     type    = string
-}
-
-variable "environment" {
-    description = "Environment of the cluster"
-    default = "developement"
-    type = string
 }
