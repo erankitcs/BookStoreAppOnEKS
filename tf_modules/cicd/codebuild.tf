@@ -110,7 +110,7 @@ resource "aws_codebuild_project" "codebuild" {
   }
   source_version    = var.code_commit_branch
   tags = {
-    Environment = var.environment
+    Environment = "dev"
   }
 }
 
@@ -126,15 +126,11 @@ resource "aws_codebuild_project" "codebuilddevdeployment" {
   }
   badge_enabled = false
   environment {
-    compute_type                = "LINUX_CONTAINER"
+    compute_type                = "BUILD_GENERAL1_SMALL"
     image                       = "aws/codebuild/amazonlinux2-x86_64-standard:3.0"
     type                        = "LINUX_CONTAINER"
     image_pull_credentials_type = "CODEBUILD"
     privileged_mode             = true
-    environment_variable {
-      name  = "ECR_URL"
-      value = aws_ecr_repository.ecr.repository_url
-    }
     environment_variable {
       name  = "AWS_DEFAULT_REGION"
       value = data.aws_region.current.name
@@ -151,6 +147,43 @@ resource "aws_codebuild_project" "codebuilddevdeployment" {
   }
   source_version    = var.code_commit_branch
   tags = {
-    Environment = var.environment
+    Environment = "dev"
+  }
+}
+
+
+resource "aws_codebuild_project" "codebuildproddeployment" {
+  name          = "bookstore-development-deploy-${var.app_name}"
+  description   = "CodeBuild project for Deployment the App- ${var.app_name} in Prodcution Namespace."
+  build_timeout = "60"
+  queued_timeout = "480"
+  service_role  = aws_iam_role.codebuild_iam.arn
+  artifacts {
+    type = "NO_ARTIFACTS"
+  }
+  badge_enabled = false
+  environment {
+    compute_type                = "BUILD_GENERAL1_SMALL"
+    image                       = "aws/codebuild/amazonlinux2-x86_64-standard:3.0"
+    type                        = "LINUX_CONTAINER"
+    image_pull_credentials_type = "CODEBUILD"
+    privileged_mode             = true
+    environment_variable {
+      name  = "AWS_DEFAULT_REGION"
+      value = data.aws_region.current.name
+    }
+    environment_variable {
+      name  = "EKS_CLUSTER_NAME"
+      value = data.terraform_remote_state.eks_cluster.outputs.cluster_name
+    }
+  }
+  source {
+    type            = "CODECOMMIT"
+    location        = aws_codecommit_repository.codecommit.clone_url_http
+    buildspec       = var.proddeployspec_location
+  }
+  source_version    = var.code_commit_branch
+  tags = {
+    Environment = "prod"
   }
 }

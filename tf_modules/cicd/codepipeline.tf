@@ -286,4 +286,49 @@ resource "aws_codepipeline" "codepipeline" {
       namespace        = "BuildVariables"
     }
   }
+  stage {
+    name = "DeployDevelopment"
+
+    action {
+      name             = "DeployDevelopment"
+      category         = "Build"
+      owner            = "AWS"
+      provider         = "CodeBuild"
+      input_artifacts  = ["SourceArtifact"]
+      output_artifacts = ["DeployArtifact"]
+      version          = "1"
+      run_order        = 1
+      configuration = {
+        ProjectName = aws_codebuild_project.codebuilddevdeployment.name
+      }
+      region           = data.aws_region.current.name
+      namespace        = "DeployVariables"
+    }
+  }
+  stage {
+    name = "DeployProd"
+    action {
+      name             = "Approve"
+      category         = "Approval"
+      owner            = "AWS"
+      provider         = "CodeBuild"
+      version          = "1"
+      run_order        = 1
+    }
+    action {
+      name             = "DeployDevelopment"
+      category         = "Build"
+      owner            = "AWS"
+      provider         = "CodeBuild"
+      input_artifacts  = ["SourceArtifact"]
+      output_artifacts = ["DeployProductionArtifact"]
+      version          = "1"
+      run_order        = 2
+      configuration = {
+        ProjectName = aws_codebuild_project.codebuildproddeployment.name
+      }
+      region           = data.aws_region.current.name
+      namespace        = "DeployProductionVariables"
+    }
+  }
 }

@@ -1,12 +1,6 @@
-variable "environment" {
-    description = "Environment of the Pipeline"
-    default = "developement"
-    type = string
-}
-
 variable "app_name" {
     description = "App Name  of the Pipeline"
-    default = "resource-api"
+    //default = "resource-api"
     type = string
 }
 
@@ -25,6 +19,12 @@ variable "buildspec_location" {
 variable "devdeployspec_location" {
     description = "Develoment Deploy Build Spec Location."
     default = "infra/codebuild/development/buildspec.yml"
+    type = string
+}
+
+variable "proddeployspec_location" {
+    description = "Develoment Deploy Build Spec Location."
+    default = "infra/codebuild/prod/buildspec.yml"
     type = string
 }
 
