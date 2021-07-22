@@ -82,6 +82,6 @@ tolerations: []
 affinity: {}
 
 api:
-  url: https://api.dev.techenvision.net
+  url: https://api.dev.bookstore.techenvision.net
 test: 
   enabled: false

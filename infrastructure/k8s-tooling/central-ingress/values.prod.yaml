@@ -10,19 +10,19 @@ ingress:
       alb.ingress.kubernetes.io/load-balancer-attributes: "idle_timeout.timeout_seconds=360"
     path: /
     hosts:
-      - hostname: renting-api.mariomerco.com
+      - hostname: renting-api.bookstore.techenvision.net
         serviceName: renting-api-service
         port: 80
       
-      - hostname: resource-api.mariomerco.com
+      - hostname: resource-api.bookstore.techenvision.net
         serviceName: resource-api-service
         port: 80
       
-      - hostname: inventory-api.mariomerco.com
+      - hostname: inventory-api.bookstore.techenvision.net
         serviceName: inventory-api-service
         port: 80
 
-      - hostname: clients-api.mariomerco.com
+      - hostname: clients-api.bookstore.techenvision.net
         serviceName: clients-api-service
         port: 80
 
@@ -36,10 +36,10 @@ ingress:
       alb.ingress.kubernetes.io/load-balancer-attributes: "idle_timeout.timeout_seconds=360"
     path: /
     hosts:
-      - hostname: bookstore.mariomerco.com
+      - hostname: bookstore.bookstore.techenvision.net
         serviceName: front-end-service
         port: 80
 
-      - hostname: api.mariomerco.com
+      - hostname: api.bookstore.techenvision.net
         serviceName: front-end-service-proxy
         port: 80
