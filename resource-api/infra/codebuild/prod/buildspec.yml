@@ -26,7 +26,7 @@ phases:
       - kubectl get nodes
   build: 
     commands:
-      - cd infra/helm-v2
+      - cd infra/helm
       - helm upgrade --install --namespace ${NAMESPACE} ${HELM_RELEASE_NAME} -f values.yaml -f values.${NAMESPACE}.yaml --set image.tag=${TAG} --set serviceAccount.roleARN=${SA_ROLE_ARN} .
   post_build: 
     commands:

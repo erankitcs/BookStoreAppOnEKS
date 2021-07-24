@@ -34,3 +34,4 @@ windows_environment.ps1
 
 kubeconfig_bookstore-eks-X7b6Bawd
 infrastructure/eks/terraform/kubeconfig_bookstore-eks-X7b6Bawd
+infrastructure/cicd/auth-config.yaml

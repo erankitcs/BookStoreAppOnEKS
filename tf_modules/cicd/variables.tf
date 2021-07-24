@@ -12,13 +12,13 @@ variable "cluster_name" {
 variable "service_account_dev_role_arn" {
     description = "Service Account of DEV."
     type = string
-    default = null
+    default = "NA"
 }
 
 variable "service_account_prod_role_arn" {
     description = "Production Service Account."
     type = string
-    default = null
+    default = "NA"
 }
 
 
