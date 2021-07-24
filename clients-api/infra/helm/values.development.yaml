@@ -1,5 +1,5 @@
 image:
-  repository: erankitcs/bookstoreapp_clients-api
-
+  repository: 319794837620.dkr.ecr.us-west-2.amazonaws.com/bookstore-clients-api
+  roleARN: 
 aspnet:
   environment: Development

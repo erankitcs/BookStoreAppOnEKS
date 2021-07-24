@@ -1,7 +1,7 @@
 # NOTE: When installing, please, update this file with the correct subdomain!
 
 image:
-  repository: erankitcs/bookstoreapp_front-end
+  repository: 319794837620.dkr.ecr.us-west-2.amazonaws.com/bookstore-front-end
 
 api:
   url: https://api.dev.bookstore.techenvision.net

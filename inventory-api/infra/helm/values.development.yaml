@@ -1,2 +1,3 @@
 image:
-  repository: erankitcs/bookstoreapp_inventory-api
+  repository: 319794837620.dkr.ecr.us-west-2.amazonaws.com/bookstore-inventory-api
+  roleARN:

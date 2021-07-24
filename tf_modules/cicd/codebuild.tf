@@ -25,8 +25,20 @@ resource "aws_iam_role_policy" "codebuild_policy" {
                     "Version": "2012-10-17",
                     "Statement": [
                         {
+                        "Effect": "Allow",
+                            "Action": [
+                                "eks:DescribeNodegroup",
+                                "eks:DescribeUpdate",
+                                "eks:DescribeCluster"
+                            ],
+                            "Resource": "*"
+                        },
+                        {
                             "Effect": "Allow",
-                            "Resource": ["arn:aws:logs:${data.aws_region.current.name}:${data.aws_caller_identity.current.account_id}:log-group:/aws/codebuild/bookstore-${var.app_name}","arn:aws:logs:${data.aws_region.current.name}:${data.aws_caller_identity.current.account_id}:log-group:/aws/codebuild/bookstore-${var.app_name}:*"
+                            "Resource": [
+                              "arn:aws:logs:${data.aws_region.current.name}:${data.aws_caller_identity.current.account_id}:log-group:/aws/codebuild/bookstore-${var.app_name}","arn:aws:logs:${data.aws_region.current.name}:${data.aws_caller_identity.current.account_id}:log-group:/aws/codebuild/bookstore-${var.app_name}:*",
+                              "arn:aws:logs:${data.aws_region.current.name}:${data.aws_caller_identity.current.account_id}:log-group:/aws/codebuild/bookstore-${var.app_name}","arn:aws:logs:${data.aws_region.current.name}:${data.aws_caller_identity.current.account_id}:log-group:/aws/codebuild/bookstore-development-deploy-${var.app_name}:*",
+                              "arn:aws:logs:${data.aws_region.current.name}:${data.aws_caller_identity.current.account_id}:log-group:/aws/codebuild/bookstore-${var.app_name}","arn:aws:logs:${data.aws_region.current.name}:${data.aws_caller_identity.current.account_id}:log-group:/aws/codebuild/bookstore-prod-deploy${var.app_name}:*"
                             ],
                             "Action": [
                                 "logs:CreateLogGroup",
@@ -139,6 +151,10 @@ resource "aws_codebuild_project" "codebuilddevdeployment" {
       name  = "EKS_CLUSTER_NAME"
       value = var.cluster_name
     }
+    environment_variable {
+      name  = "ECR_URL"
+      value = aws_ecr_repository.ecr.repository_url
+    }
   }
   source {
     type            = "CODECOMMIT"
@@ -175,6 +191,10 @@ resource "aws_codebuild_project" "codebuildproddeployment" {
     environment_variable {
       name  = "EKS_CLUSTER_NAME"
       value = var.cluster_name
+    }
+    environment_variable {
+      name  = "ECR_URL"
+      value = aws_ecr_repository.ecr.repository_url
     }
   }
   source {

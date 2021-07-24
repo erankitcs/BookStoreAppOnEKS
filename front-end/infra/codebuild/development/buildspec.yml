@@ -27,8 +27,8 @@ phases:
       - kubectl get nodes
   build: 
     commands:
-      - cd infra/helm-v2
-      - helm upgrade --install --namespace ${NAMESPACE} ${HELM_RELEASE_NAME} -f values.yaml -f values.${NAMESPACE}.yaml --set image.tag=${TAG} .
+      - cd infra/helm
+      - helm upgrade --install --namespace ${NAMESPACE} ${HELM_RELEASE_NAME} -f values.yaml --set image.repository=${ECR_URL} --set image.tag=${TAG} .
   post_build: 
     commands:
       - echo Done
