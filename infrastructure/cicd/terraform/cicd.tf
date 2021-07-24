@@ -10,28 +10,38 @@ data "terraform_remote_state" "eks_cluster" {
   }
 }
 
+data "aws_caller_identity" "current" {}
+
 module "cicd_resource_api" {
   source   = "../../../tf_modules/cicd"
   app_name = "resource-api"
   cluster_name= data.terraform_remote_state.eks_cluster.outputs.cluster_name
+  service_account_dev_role_arn= "arn:aws:iam::${data.aws_caller_identity.current.account_id}:role/${data.terraform_remote_state.eks_cluster.outputs.cluster_name}-development-sa-resource-api-role"
+  service_account_prod_role_arn= "arn:aws:iam::${data.aws_caller_identity.current.account_id}:role/${data.terraform_remote_state.eks_cluster.outputs.cluster_name}-prod-sa-resource-api-role"
 }
 
 module "cicd_renting_api" {
   source   = "../../../tf_modules/cicd"
   app_name = "renting-api"
   cluster_name= data.terraform_remote_state.eks_cluster.outputs.cluster_name
+  service_account_dev_role_arn= "arn:aws:iam::${data.aws_caller_identity.current.account_id}:role/${data.terraform_remote_state.eks_cluster.outputs.cluster_name}-development-sa-renting-api-role"
+  service_account_prod_role_arn= "arn:aws:iam::${data.aws_caller_identity.current.account_id}:role/${data.terraform_remote_state.eks_cluster.outputs.cluster_name}-prod-sa-renting-api-role"
 }
 
 module "cicd_inventory_api" {
   source   = "../../../tf_modules/cicd"
   app_name = "inventory-api"
   cluster_name= data.terraform_remote_state.eks_cluster.outputs.cluster_name
+  service_account_dev_role_arn= "arn:aws:iam::${data.aws_caller_identity.current.account_id}:role/${data.terraform_remote_state.eks_cluster.outputs.cluster_name}-development-sa-inventory-api-role"
+  service_account_prod_role_arn= "arn:aws:iam::${data.aws_caller_identity.current.account_id}:role/${data.terraform_remote_state.eks_cluster.outputs.cluster_name}-prod-sa-inventory-api-role"
 }
 
 module "cicd_clients_api" {
   source   = "../../../tf_modules/cicd"
   app_name = "clients-api"
   cluster_name= data.terraform_remote_state.eks_cluster.outputs.cluster_name
+  service_account_dev_role_arn= "arn:aws:iam::${data.aws_caller_identity.current.account_id}:role/${data.terraform_remote_state.eks_cluster.outputs.cluster_name}-development-sa-clients-api-role"
+  service_account_prod_role_arn= "arn:aws:iam::${data.aws_caller_identity.current.account_id}:role/${data.terraform_remote_state.eks_cluster.outputs.cluster_name}-prod-sa-clients-api-role"
 }
 
 module "cicd_front_end" {

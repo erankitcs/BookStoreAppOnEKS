@@ -155,6 +155,10 @@ resource "aws_codebuild_project" "codebuilddevdeployment" {
       name  = "ECR_URL"
       value = aws_ecr_repository.ecr.repository_url
     }
+    environment_variable {
+      name  = "SA_ROLE_ARN"
+      value = var.service_account_dev_role_arn
+    }
   }
   source {
     type            = "CODECOMMIT"
@@ -195,6 +199,10 @@ resource "aws_codebuild_project" "codebuildproddeployment" {
     environment_variable {
       name  = "ECR_URL"
       value = aws_ecr_repository.ecr.repository_url
+    }
+    environment_variable {
+      name  = "SA_ROLE_ARN"
+      value = var.service_account_prod_role_arn
     }
   }
   source {
