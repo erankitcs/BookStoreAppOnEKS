@@ -1,1 +1,1 @@
-domain_name=techenvision.net
+hosted_zone="techenvision.net"

@@ -137,7 +137,7 @@ resource "aws_codebuild_project" "codebuilddevdeployment" {
     }
     environment_variable {
       name  = "EKS_CLUSTER_NAME"
-      value = data.terraform_remote_state.eks_cluster.outputs.cluster_name
+      value = var.cluster_name
     }
   }
   source {
@@ -153,7 +153,7 @@ resource "aws_codebuild_project" "codebuilddevdeployment" {
 
 
 resource "aws_codebuild_project" "codebuildproddeployment" {
-  name          = "bookstore-development-deploy-${var.app_name}"
+  name          = "bookstore-prod-deploy-${var.app_name}"
   description   = "CodeBuild project for Deployment the App- ${var.app_name} in Prodcution Namespace."
   build_timeout = "60"
   queued_timeout = "480"
@@ -174,7 +174,7 @@ resource "aws_codebuild_project" "codebuildproddeployment" {
     }
     environment_variable {
       name  = "EKS_CLUSTER_NAME"
-      value = data.terraform_remote_state.eks_cluster.outputs.cluster_name
+      value = var.cluster_name
     }
   }
   source {

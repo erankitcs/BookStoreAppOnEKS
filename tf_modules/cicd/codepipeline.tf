@@ -308,10 +308,10 @@ resource "aws_codepipeline" "codepipeline" {
   stage {
     name = "DeployProd"
     action {
-      name             = "Approve"
+      name             = "ApproveProdDeployment"
       category         = "Approval"
       owner            = "AWS"
-      provider         = "CodeBuild"
+      provider         = "Manual"
       version          = "1"
       run_order        = 1
     }

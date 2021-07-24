@@ -3,29 +3,41 @@ provider "aws" {
   region  = "us-west-2"
 }
 
+data "terraform_remote_state" "eks_cluster" {
+  backend = "local"
+  config = {
+    path = "../../eks/terraform/terraform.tfstate"
+  }
+}
+
 module "cicd_resource_api" {
   source   = "../../../tf_modules/cicd"
   app_name = "resource-api"
+  cluster_name= data.terraform_remote_state.eks_cluster.outputs.cluster_name
 }
 
 module "cicd_renting_api" {
   source   = "../../../tf_modules/cicd"
   app_name = "renting-api"
+  cluster_name= data.terraform_remote_state.eks_cluster.outputs.cluster_name
 }
 
 module "cicd_inventory_api" {
   source   = "../../../tf_modules/cicd"
   app_name = "inventory-api"
+  cluster_name= data.terraform_remote_state.eks_cluster.outputs.cluster_name
 }
 
 module "cicd_clients_api" {
   source   = "../../../tf_modules/cicd"
   app_name = "clients-api"
+  cluster_name= data.terraform_remote_state.eks_cluster.outputs.cluster_name
 }
 
 module "cicd_front_end" {
   source   = "../../../tf_modules/cicd"
   app_name = "front-end"
+  cluster_name= data.terraform_remote_state.eks_cluster.outputs.cluster_name
 }
 
 

@@ -7,7 +7,7 @@ module "iam_assumable_role_clients_api" {
   source                        = "terraform-aws-modules/iam/aws//modules/iam-assumable-role-with-oidc"
   version                       = "4.2.0"
   create_role                   = true
-  role_name                     = "${local.cluster_name}-sa-clients-api-role"
+  role_name                     = "${local.cluster_name}-${local.environments[count.index]}-sa-clients-api-role"
   provider_url                  = replace(module.eks.cluster_oidc_issuer_url, "https://", "")
   number_of_role_policy_arns                = 1
   role_policy_arns              = [data.terraform_remote_state.clients-api.outputs.ddb_policy_arn]
@@ -19,7 +19,7 @@ module "iam_assumable_role_inventory_api" {
   source                        = "terraform-aws-modules/iam/aws//modules/iam-assumable-role-with-oidc"
   version                       = "4.2.0"
   create_role                   = true
-  role_name                     = "${local.cluster_name}-sa-inventory-api-role"
+  role_name                     = "${local.cluster_name}-${local.environments[count.index]}-sa-inventory-api-role"
   provider_url                  = replace(module.eks.cluster_oidc_issuer_url, "https://", "")
   number_of_role_policy_arns                = 1
   role_policy_arns              = [data.terraform_remote_state.inventory-api.outputs.ddb_policy_arn]
@@ -31,7 +31,7 @@ module "iam_assumable_role_renting_api" {
   source                        = "terraform-aws-modules/iam/aws//modules/iam-assumable-role-with-oidc"
   version                       = "4.2.0"
   create_role                   = true
-  role_name                     = "${local.cluster_name}-sa-renting-api-role"
+  role_name                     = "${local.cluster_name}-${local.environments[count.index]}-sa-renting-api-role"
   provider_url                  = replace(module.eks.cluster_oidc_issuer_url, "https://", "")
   number_of_role_policy_arns                = 1
   role_policy_arns              = [data.terraform_remote_state.renting-api.outputs.ddb_policy_arn]
@@ -43,7 +43,7 @@ module "iam_assumable_role_resource_api" {
   source                        = "terraform-aws-modules/iam/aws//modules/iam-assumable-role-with-oidc"
   version                       = "4.2.0"
   create_role                   = true
-  role_name                     = "${local.cluster_name}-sa-resource-api-role"
+  role_name                     = "${local.cluster_name}-${local.environments[count.index]}-sa-resource-api-role"
   provider_url                  = replace(module.eks.cluster_oidc_issuer_url, "https://", "")
   number_of_role_policy_arns                = 1
   role_policy_arns              = [data.terraform_remote_state.resource-api.outputs.ddb_policy_arn]

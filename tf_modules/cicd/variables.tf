@@ -4,6 +4,11 @@ variable "app_name" {
     type = string
 }
 
+variable "cluster_name" {
+    description = "EKS Cluster Name"
+    type = string
+}
+
 variable "code_commit_branch" {
     description = "Branch to use for CI/CD Pipeline."
     default = "master"
