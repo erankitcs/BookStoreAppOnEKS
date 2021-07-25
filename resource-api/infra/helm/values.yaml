@@ -81,8 +81,6 @@ tolerations: []
 
 affinity: {}
 
-aspnet:
-  environment: Development
 aws:
   region: us-west-2
 test: 

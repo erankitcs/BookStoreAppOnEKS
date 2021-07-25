@@ -82,9 +82,9 @@ tolerations: []
 affinity: {}
 
 endpoints:
-  inventory: http://inventory-api-service
-  clients: http://clients-api-service
-  resources: http://resource-api-service
+  inventory: http://bookstore-inventory-api-service
+  clients: http://bookstore-clients-api-service
+  resources: http://bookstore-resource-api-service
 aws:
   region: us-west-2
 test: 

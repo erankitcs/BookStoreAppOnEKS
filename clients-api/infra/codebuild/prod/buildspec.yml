@@ -27,7 +27,7 @@ phases:
   build: 
     commands:
       - cd infra/helm
-      - helm upgrade --install --namespace ${NAMESPACE} ${HELM_RELEASE_NAME} -f values.yaml --set image.repository=${ECR_URL} --set image.tag=${TAG} --set serviceAccount.roleARN=${SA_ROLE_ARN} .
+      - helm upgrade --install --namespace ${NAMESPACE} ${HELM_RELEASE_NAME} -f values.yaml --set image.repository=${ECR_URL} --set image.tag=${TAG} --set serviceAccount.roleARN=${SA_ROLE_ARN} --set aspnet.environment=Production .
   post_build: 
     commands:
       - echo Done

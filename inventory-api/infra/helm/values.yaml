@@ -82,6 +82,6 @@ tolerations: []
 affinity: {}
 
 resourceapi:
-  endpoint: http://resource-api-service
+  endpoint: http://bookstore-resource-api-service
 test: 
   enabled: false
