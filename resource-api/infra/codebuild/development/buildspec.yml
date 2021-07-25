@@ -1,5 +1,4 @@
 version: 0.2
-
 env:
   variables:
     HELM_RELEASE_NAME: resource-api-development
