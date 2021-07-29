@@ -17,6 +17,7 @@ dynamodb_table= os.environ['DYNAMODB_TABLE']
 dynamodb = boto3.resource('dynamodb')
 
 xray_recorder.configure(service='Resource API')
+xray_recorder.configure(sampling=False)
 XRayMiddleware(app, xray_recorder)
 patch_all()
 

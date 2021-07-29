@@ -83,5 +83,6 @@ affinity: {}
 
 aws:
   region: us-west-2
+  xray_enabled: "false"
 test: 
   enabled: false

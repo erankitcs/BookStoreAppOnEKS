@@ -23,7 +23,7 @@ module "iam_assumable_role_inventory_api" {
   provider_url                  = replace(module.eks.cluster_oidc_issuer_url, "https://", "")
   number_of_role_policy_arns                = 1
   role_policy_arns              = [data.terraform_remote_state.inventory-api.outputs.ddb_policy_arn]
-  oidc_fully_qualified_subjects = ["system:serviceaccount:${local.environments[count.index]}:bookstore-inventory-api-service-accountt"]
+  oidc_fully_qualified_subjects = ["system:serviceaccount:${local.environments[count.index]}:bookstore-inventory-api-service-account"]
 }
 
 module "iam_assumable_role_renting_api" {

@@ -24,7 +24,7 @@ app.use(AWSXRay.express.openSegment('Inventory API'));
 const port = 5001;
 const resourceApiEndpont = process.env.RESOURCE_API_ENDPOINT || 'http://localhost:5000';
 const dynamodbTable = process.env.DYNAMODB_TABLE || 'development-inventory' ;
-const awsDefaultRegion = process.env.AWS_DEFAULT_REGION || 'us-east-2'
+const awsDefaultRegion = process.env.AWS_DEFAULT_REGION || 'us-west-2'
 const dynamoDb = new AWS.DynamoDB.DocumentClient({region: awsDefaultRegion});
 app.use(AWSXRay.express.openSegment('Inventory API'));
 
@@ -160,7 +160,8 @@ async function iterateResponsePromise(listOfResources, response) {
             FilterExpression: "ResourceId = :r and Available = :a"
         }
         dynamoDb.scan(params, (err,data) => {
-            
+            console.log(err);
+            console.log(data);
             tempObject.AvailableCopies = data.Count;
 
             var paramsUnavailable = {
@@ -172,6 +173,8 @@ async function iterateResponsePromise(listOfResources, response) {
                 FilterExpression: "ResourceId = :r and Available = :a"
             }
             dynamoDb.scan(paramsUnavailable, (err,data) => {
+                console.log(err);
+                console.log(data);
                 tempObject.UnavailableCopies = data.Count;
                 tempObject.TotalCopies = tempObject.AvailableCopies + tempObject.UnavailableCopies;
                 callback(null, tempObject);

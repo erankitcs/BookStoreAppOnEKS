@@ -85,3 +85,5 @@ resourceapi:
   endpoint: http://bookstore-resource-api-service
 test: 
   enabled: false
+aws:
+  region: us-west-2

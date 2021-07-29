@@ -2,3 +2,7 @@ image:
   repository: 319794837620.dkr.ecr.us-west-2.amazonaws.com/bookstore-front-end
 api:
   url: https://api.bookstore.techenvision.net
+  resource_api: https://resource-api.bookstore.techenvision.net/
+  inventory_api: https://inventory-api.bookstore.techenvision.net/
+  renting_api: https://renting-api.bookstore.techenvision.net/
+  clients_api: https://clients-api.bookstore.techenvision.net/

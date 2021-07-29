@@ -1,3 +1,5 @@
 image:
   repository: 319794837620.dkr.ecr.us-west-2.amazonaws.com/bookstore-resource-api
-  roleARN:
+  tag: 1.3.52d502ea
+serviceAccount:  
+  roleARN: arn:aws:iam::319794837620:role/bookstore-eks-X7b6Bawd-development-sa-resource-api-role

@@ -43,6 +43,8 @@ spec:
               value: {{ .Release.Namespace }}-inventory
             - name: RESOURCE_API_ENDPOINT
               value: {{ .Values.resourceapi.endpoint }}
+            - name: AWS_DEFAULT_REGION
+              value: {{ .Values.aws.region}}
 #          livenessProbe:
 #            httpGet:
 #              path: /

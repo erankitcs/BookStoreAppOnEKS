@@ -83,5 +83,9 @@ affinity: {}
 
 api:
   url: https://api.dev.bookstore.techenvision.net
+  resource_api: https://resource-api.dev.bookstore.techenvision.net/
+  inventory_api: https://inventory-api.dev.bookstore.techenvision.net/
+  renting_api: https://renting-api.dev.bookstore.techenvision.net/
+  clients_api: https://clients-api.dev.bookstore.techenvision.net/
 test: 
   enabled: false
