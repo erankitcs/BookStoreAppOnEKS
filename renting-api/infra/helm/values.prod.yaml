@@ -1,3 +1,5 @@
 image:
   repository: 319794837620.dkr.ecr.us-west-2.amazonaws.com/bookstore-renting-api
+  tag:
+serviceAccount:
   roleARN:

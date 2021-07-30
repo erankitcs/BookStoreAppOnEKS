@@ -1,5 +1,6 @@
 image:
   repository: 319794837620.dkr.ecr.us-west-2.amazonaws.com/bookstore-front-end
+  tag:
 api:
   url: https://api.bookstore.techenvision.net
   resource_api: https://resource-api.bookstore.techenvision.net/

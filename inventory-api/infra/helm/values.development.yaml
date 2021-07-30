@@ -1,5 +1,5 @@
 image:
-  repository: erankitcs/bookstoreapp_inventory-api
-  #tag: 1.3.560ded6d
+  repository: 319794837620.dkr.ecr.us-west-2.amazonaws.com/bookstore-inventory-api
+  tag: 1.3.560ded6d
 serviceAccount:  
   roleARN: arn:aws:iam::319794837620:role/bookstore-eks-X7b6Bawd-development-sa-inventory-api-role
