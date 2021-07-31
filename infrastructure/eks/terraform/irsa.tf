@@ -1,5 +1,9 @@
 locals {
   environments = ["development", "prod"]
+  clients_dbpolicies = [data.terraform_remote_state.clients-api.outputs.development_ddb_policy_arn , data.terraform_remote_state.clients-api.outputs.prod_ddb_policy_arn]
+  inventory_dbpolicies = [data.terraform_remote_state.inventory-api.outputs.development_ddb_policy_arn , data.terraform_remote_state.inventory-api.outputs.prod_ddb_policy_arn]
+  renting_dbpolicies = [data.terraform_remote_state.renting-api.outputs.development_ddb_policy_arn , data.terraform_remote_state.renting-api.outputs.prod_ddb_policy_arn]
+  resource_dbpolicies = [data.terraform_remote_state.resource-api.outputs.development_ddb_policy_arn , data.terraform_remote_state.resource-api.outputs.prod_ddb_policy_arn]
 }
 
 module "iam_assumable_role_clients_api" {
@@ -10,7 +14,7 @@ module "iam_assumable_role_clients_api" {
   role_name                     = "${local.cluster_name}-${local.environments[count.index]}-sa-clients-api-role"
   provider_url                  = replace(module.eks.cluster_oidc_issuer_url, "https://", "")
   number_of_role_policy_arns                = 1
-  role_policy_arns              = [data.terraform_remote_state.clients-api.outputs.ddb_policy_arn]
+  role_policy_arns              = [local.clients_dbpolicies[count.index]]
   oidc_fully_qualified_subjects = ["system:serviceaccount:${local.environments[count.index]}:bookstore-clients-api-service-account"]
 }
 
@@ -22,7 +26,7 @@ module "iam_assumable_role_inventory_api" {
   role_name                     = "${local.cluster_name}-${local.environments[count.index]}-sa-inventory-api-role"
   provider_url                  = replace(module.eks.cluster_oidc_issuer_url, "https://", "")
   number_of_role_policy_arns                = 1
-  role_policy_arns              = [data.terraform_remote_state.inventory-api.outputs.ddb_policy_arn]
+  role_policy_arns              = [local.inventory_dbpolicies[count.index]]
   oidc_fully_qualified_subjects = ["system:serviceaccount:${local.environments[count.index]}:bookstore-inventory-api-service-account"]
 }
 
@@ -34,7 +38,7 @@ module "iam_assumable_role_renting_api" {
   role_name                     = "${local.cluster_name}-${local.environments[count.index]}-sa-renting-api-role"
   provider_url                  = replace(module.eks.cluster_oidc_issuer_url, "https://", "")
   number_of_role_policy_arns                = 1
-  role_policy_arns              = [data.terraform_remote_state.renting-api.outputs.ddb_policy_arn]
+  role_policy_arns              = [local.renting_dbpolicies[count.index]]
   oidc_fully_qualified_subjects = ["system:serviceaccount:${local.environments[count.index]}:bookstore-renting-api-service-account"]
 }
 
@@ -46,7 +50,7 @@ module "iam_assumable_role_resource_api" {
   role_name                     = "${local.cluster_name}-${local.environments[count.index]}-sa-resource-api-role"
   provider_url                  = replace(module.eks.cluster_oidc_issuer_url, "https://", "")
   number_of_role_policy_arns                = 1
-  role_policy_arns              = [data.terraform_remote_state.resource-api.outputs.ddb_policy_arn]
+  role_policy_arns              = [local.resource_dbpolicies[count.index]]
   oidc_fully_qualified_subjects = ["system:serviceaccount:${local.environments[count.index]}:bookstore-resource-api-service-account"]
 }
 

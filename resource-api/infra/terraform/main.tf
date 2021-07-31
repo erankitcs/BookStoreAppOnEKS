@@ -31,12 +31,12 @@ module "prod_dynamodb_table" {
   ]
 }
 
-output "ddb_policy_arn" {
+output "development_ddb_policy_arn" {
   description = "ARN of the DynamoDb Policy for ResourcesApi."
   value       = module.dynamodb_table.ddb_policy_arn
 }
 
-output "ddb_table_arn" {
+output "development_ddb_table_arn" {
   description = "ARN of the DynamoDb Table for ResourcesApi."
   value       = module.dynamodb_table.ddb_table_arn
 }
