@@ -20,7 +20,10 @@ docker compose up
 ```
 3. Open the URL on `http://localhost:80`
 
-## Steps to Deploy into AWS Cloud
+## Steps to Deploy into AWS Cloud using Helm.
+
+
+## Steps to Deploy into AWS Cloud using CI/CD Pipeline
 1. AWS CLI setup with Admin Role.
 2. Generate Code Commit Authentication from IAM.
 3. Run create.sh to create infrastructure and setup Kubernetes Cluster.

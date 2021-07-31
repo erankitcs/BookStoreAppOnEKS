@@ -11,19 +11,19 @@ ingress:
     path: /
     hosts:
       - hostname: renting-api.bookstore.techenvision.net
-        serviceName: renting-api-service
+        serviceName: bookstore-renting-api-service
         port: 80
       
       - hostname: resource-api.bookstore.techenvision.net
-        serviceName: resource-api-service
+        serviceName: bookstore-resource-api-service
         port: 80
       
       - hostname: inventory-api.bookstore.techenvision.net
-        serviceName: inventory-api-service
+        serviceName: bookstore-inventory-api-service
         port: 80
 
       - hostname: clients-api.bookstore.techenvision.net
-        serviceName: clients-api-service
+        serviceName: bookstore-clients-api-service
         port: 80
 
       
@@ -37,9 +37,9 @@ ingress:
     path: /
     hosts:
       - hostname: bookstore.techenvision.net
-        serviceName: front-end-service
+        serviceName: bookstore-front-end-service
         port: 80
 
       - hostname: api.bookstore.techenvision.net
-        serviceName: front-end-service-proxy
+        serviceName: bookstore-front-end-proxy-service
         port: 80
