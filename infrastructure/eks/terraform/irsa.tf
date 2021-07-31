@@ -54,9 +54,9 @@ module "iam_assumable_role_app_mesh" {
   source                        = "terraform-aws-modules/iam/aws//modules/iam-assumable-role-with-oidc"
   version                       = "4.2.0"
   create_role                   = true
-  role_name                     = "${local.cluster_name}-${local.environments}-sa-app-mesh-role"
+  role_name                     = "${local.cluster_name}-sa-app-mesh-role"
   provider_url                  = replace(module.eks.cluster_oidc_issuer_url, "https://", "")
   number_of_role_policy_arns    = 3
   role_policy_arns              = ["arn:aws:iam::aws:policy/AWSCloudMapFullAccess","arn:aws:iam::aws:policy/AWSAppMeshFullAccess","arn:aws:iam::aws:policy/AWSXRayDaemonWriteAccess"]
-  oidc_fully_qualified_subjects = ["system:serviceaccount:${local.environments}:bookstore-app-mesh-service-account"]
+  oidc_fully_qualified_subjects = ["system:serviceaccount:appmesh-system:bookstore-app-mesh-service-account"]
 }

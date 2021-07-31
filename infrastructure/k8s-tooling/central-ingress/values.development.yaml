@@ -36,7 +36,7 @@ ingress:
       alb.ingress.kubernetes.io/load-balancer-attributes: "idle_timeout.timeout_seconds=360"
     path: /
     hosts:
-      - hostname: bookstore.dev.bookstore.techenvision.net
+      - hostname: web.dev.bookstore.techenvision.net
         serviceName: bookstore-front-end-service
         port: 80
 

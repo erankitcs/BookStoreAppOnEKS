@@ -39,10 +39,15 @@ B. kubectl apply -f .\auth-config.yaml
 ```
 ./create.sh development
 ```
-7. Verify the Application using the URL.  https://bookstore.dev.`UR-HOSTED-ZONE`
-8. Go to each Pipeline and confirm to deploy the application into production environment.
-9. Go to infrastructure/k8s-tooling/central-ingress and update your own HOSTED ZONE and run
+7. Run Central Ingress infrastructure\k8s-tooling\central-ingress using helm command.
+```
+./create.sh development
+
+```
+8. Verify the Application using the URL.  https://dev.bookstore.`UR-HOSTED-ZONE`
+9. Go to each Pipeline and confirm to deploy the application into production environment.
+10. Go to infrastructure/k8s-tooling/central-ingress and update your own HOSTED ZONE and run
 ```
 ./create.sh prod
 ```
-10. Access prodcution application via https://bookstore.`UR-HOSTED-ZONE`
+#### Access prodcution application via https://bookstore.`UR-HOSTED-ZONE`
