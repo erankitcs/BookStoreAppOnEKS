@@ -23,7 +23,7 @@ data:
             add_header 'Access-Control-Allow-Methods' 'GET, POST, OPTIONS, PUT, DELETE';
             add_header 'Access-Control-Allow-Headers' 'Accept,Authorization,Cache-Control,Content-Type,DNT,If-Modified-Since,Keep-Alive,Origin,User-Agent,X-Requested-With' always;
         
-            proxy_pass http://bookstore-resource-api-service/;
+            proxy_pass {{ .Values.api.resource_api }};
         }
         location /inventory-api/ {
             add_header 'Access-Control-Allow-Origin' '*';
@@ -31,7 +31,7 @@ data:
             add_header 'Access-Control-Allow-Methods' 'GET, POST, OPTIONS, PUT, DELETE';
             add_header 'Access-Control-Allow-Headers' 'Accept,Authorization,Cache-Control,Content-Type,DNT,If-Modified-Since,Keep-Alive,Origin,User-Agent,X-Requested-With' always;
         
-            proxy_pass http://bookstore-inventory-api-service/;
+            proxy_pass {{ .Values.api.inventory_api }};
         }
         location /renting-api/ {
             if ($request_method = 'OPTIONS') {
@@ -64,7 +64,7 @@ data:
                 add_header 'Access-Control-Allow-Headers' 'DNT,X-CustomHeader,Keep-Alive,User-Agent,X-Requested-With,If-Modified-Since,Cache-Control,Content-Type';
             }
         
-            proxy_pass http://bookstore-renting-api-service/;
+            proxy_pass {{ .Values.api.renting_api }};
         }
         location /clients-api/ {
             if ($request_method = 'OPTIONS') {
@@ -97,7 +97,7 @@ data:
                 add_header 'Access-Control-Allow-Headers' 'DNT,X-CustomHeader,Keep-Alive,User-Agent,X-Requested-With,If-Modified-Since,Cache-Control,Content-Type';
             }
         
-            proxy_pass http://bookstore-clients-api-service/;
+            proxy_pass {{ .Values.api.clients_api }};
         }
         
         error_page   500 502 503 504  /50x.html;

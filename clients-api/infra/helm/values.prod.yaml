@@ -1,6 +1,6 @@
 image:
   repository: 319794837620.dkr.ecr.us-west-2.amazonaws.com/bookstore-clients-api
-  tag: 1.3.d8b7826f
+  tag: 1.3.d8b7827g
 serviceAccount:
   roleARN: arn:aws:iam::319794837620:role/bookstore-eks-X7b6Bawd-prod-sa-clients-api-role
 aspnet:
