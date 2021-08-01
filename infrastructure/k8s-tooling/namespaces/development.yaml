@@ -4,3 +4,5 @@ metadata:
   name: development
   labels:
     name: development
+    mesh: development-mesh
+    appmesh.k8s.aws/sidecarInjectorWebhook: enabled
