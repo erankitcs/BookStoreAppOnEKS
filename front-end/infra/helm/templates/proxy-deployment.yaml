@@ -20,6 +20,7 @@ spec:
         app: {{ template "bookstore-front-end.name" . }}-proxy
         release: {{ .Release.Name }}
     spec:
+      serviceAccountName: {{ include "bookstore-front-end.serviceAccountName" . }}
       volumes:
       - name: {{ template "bookstore-front-end.name" . }}-proxy-config
         configMap:
