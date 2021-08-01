@@ -87,3 +87,5 @@ test:
   enabled: false
 aws:
   region: us-west-2
+mesh:
+  enabled: true

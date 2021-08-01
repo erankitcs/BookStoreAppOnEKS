@@ -89,3 +89,5 @@ api:
   clients_api: https://clients-api.dev.bookstore.techenvision.net/
 test: 
   enabled: false
+mesh:
+  enabled: true

@@ -1,0 +1,22 @@
+{{- if .Values.mesh.enabled -}}
+apiVersion: appmesh.k8s.aws/v1beta2
+kind: VirtualRouter
+metadata:
+  name: {{ template "bookstore-resource-api.name" . }}-proxy-virtual-router
+  namespace: {{ .Release.Namespace }}
+spec:
+  listeners:
+    - portMapping:
+        port: {{ .Values.service.port }}
+        protocol: http
+  routes:
+    - name: {{ template "bookstore-resource-api.name" . }}-proxy-route
+      httpRoute:
+        match:
+          prefix: /
+        action:
+          weightedTargets:
+            - virtualNodeRef:
+                name: {{ template "bookstore-resource-api.name" . }}-proxy
+              weight: 1
+{{- end }}

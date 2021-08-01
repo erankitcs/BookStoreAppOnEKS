@@ -1,0 +1,13 @@
+{{- if .Values.mesh.enabled -}}
+apiVersion: appmesh.k8s.aws/v1beta2
+kind: VirtualService
+metadata:
+  name: {{ include "bookstore-resource-api.name" . }}-service
+  namespace: {{ .Release.Namespace }}
+spec:
+  awsName: {{ include "bookstore-resource-api.name" . }}-service.{{ .Release.Namespace }}.svc.cluster.local
+  provider:
+    virtualRouter:
+      virtualRouterRef:
+        name: {{ include "bookstore-resource-api.name" . }}-virtual-router
+{{- end }}

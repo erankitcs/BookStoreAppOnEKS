@@ -1,0 +1,20 @@
+{{- if .Values.mesh.enabled -}}
+apiVersion: appmesh.k8s.aws/v1beta2
+kind: VirtualNode
+metadata:
+  name: {{ include "bookstore-renting-api.name" . }}
+  namespace: {{ .Release.Namespace }}
+  labels:
+    {{- include "bookstore-renting-api.labels" . | nindent 4 }}
+spec:
+  podSelector:
+    matchLabels:
+      {{- include "bookstore-renting-api.selectorLabels" . | nindent 6 }}
+  listeners:
+    - portMapping:
+        port: {{ .Values.service.port }}
+        protocol: http
+  serviceDiscovery:
+    dns:
+      hostname: {{ include "bookstore-renting-api.name" . }}-service.{{ .Release.Namespace }}.svc.cluster.local
+{{- end }}

@@ -86,3 +86,5 @@ aws:
   xray_enabled: "false"
 test: 
   enabled: false
+mesh:
+  enabled: true

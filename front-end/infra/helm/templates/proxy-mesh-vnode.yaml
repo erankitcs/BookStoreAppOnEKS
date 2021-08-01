@@ -1,0 +1,19 @@
+{{- if .Values.mesh.enabled -}}
+apiVersion: appmesh.k8s.aws/v1beta2
+kind: VirtualNode
+metadata:
+  name: {{ template "bookstore-front-end.name" . }}-proxy
+  namespace: {{ .Release.Namespace }}
+spec:
+  podSelector:
+    matchLabels:
+      name: {{ template "bookstore-front-end.name" . }}-proxy
+      namespace: {{ .Release.Namespace }}
+  listeners:
+    - portMapping:
+        port: {{ .Values.service.port }}
+        protocol: http
+  serviceDiscovery:
+    dns:
+      hostname: {{ include "bookstore-resource-api.name" . }}-proxy-service.{{ .Release.Namespace }}.svc.cluster.local
+{{- end }}
