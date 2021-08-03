@@ -7,13 +7,13 @@ metadata:
 spec:
   podSelector:
     matchLabels:
-      name: {{ template "bookstore-front-end.name" . }}-proxy
-      namespace: {{ .Release.Namespace }}
+      app: {{ template "bookstore-front-end.name" . }}-proxy
+      release: {{ .Release.Name }}
   listeners:
     - portMapping:
         port: {{ .Values.service.port }}
         protocol: http
   serviceDiscovery:
     dns:
-      hostname: {{ include "bookstore-resource-api.name" . }}-proxy-service.{{ .Release.Namespace }}.svc.cluster.local
+      hostname: {{ include "bookstore-front-end.name" . }}-proxy-service.{{ .Release.Namespace }}.svc.cluster.local
 {{- end }}

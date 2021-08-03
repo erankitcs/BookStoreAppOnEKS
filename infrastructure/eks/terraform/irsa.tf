@@ -13,8 +13,8 @@ module "iam_assumable_role_clients_api" {
   create_role                   = true
   role_name                     = "${local.cluster_name}-${local.environments[count.index]}-sa-clients-api-role"
   provider_url                  = replace(module.eks.cluster_oidc_issuer_url, "https://", "")
-  number_of_role_policy_arns                = 2
-  role_policy_arns              = [local.clients_dbpolicies[count.index],"arn:aws:iam::aws:policy/AWSXRayDaemonWriteAccess"]
+  number_of_role_policy_arns                = 3
+  role_policy_arns              = [local.clients_dbpolicies[count.index],"arn:aws:iam::aws:policy/AWSXRayDaemonWriteAccess","arn:aws:iam::aws:policy/AWSAppMeshEnvoyAccess"]
   oidc_fully_qualified_subjects = ["system:serviceaccount:${local.environments[count.index]}:bookstore-clients-api-service-account"]
 }
 
@@ -25,8 +25,8 @@ module "iam_assumable_role_inventory_api" {
   create_role                   = true
   role_name                     = "${local.cluster_name}-${local.environments[count.index]}-sa-inventory-api-role"
   provider_url                  = replace(module.eks.cluster_oidc_issuer_url, "https://", "")
-  number_of_role_policy_arns                = 2
-  role_policy_arns              = [local.inventory_dbpolicies[count.index],"arn:aws:iam::aws:policy/AWSXRayDaemonWriteAccess"]
+  number_of_role_policy_arns                = 3
+  role_policy_arns              = [local.inventory_dbpolicies[count.index],"arn:aws:iam::aws:policy/AWSXRayDaemonWriteAccess","arn:aws:iam::aws:policy/AWSAppMeshEnvoyAccess"]
   oidc_fully_qualified_subjects = ["system:serviceaccount:${local.environments[count.index]}:bookstore-inventory-api-service-account"]
 }
 
@@ -37,8 +37,8 @@ module "iam_assumable_role_renting_api" {
   create_role                   = true
   role_name                     = "${local.cluster_name}-${local.environments[count.index]}-sa-renting-api-role"
   provider_url                  = replace(module.eks.cluster_oidc_issuer_url, "https://", "")
-  number_of_role_policy_arns                = 2
-  role_policy_arns              = [local.renting_dbpolicies[count.index],"arn:aws:iam::aws:policy/AWSXRayDaemonWriteAccess"]
+  number_of_role_policy_arns                = 3
+  role_policy_arns              = [local.renting_dbpolicies[count.index],"arn:aws:iam::aws:policy/AWSXRayDaemonWriteAccess","arn:aws:iam::aws:policy/AWSAppMeshEnvoyAccess"]
   oidc_fully_qualified_subjects = ["system:serviceaccount:${local.environments[count.index]}:bookstore-renting-api-service-account"]
 }
 
@@ -49,8 +49,8 @@ module "iam_assumable_role_resource_api" {
   create_role                   = true
   role_name                     = "${local.cluster_name}-${local.environments[count.index]}-sa-resource-api-role"
   provider_url                  = replace(module.eks.cluster_oidc_issuer_url, "https://", "")
-  number_of_role_policy_arns                = 2
-  role_policy_arns              = [local.resource_dbpolicies[count.index],"arn:aws:iam::aws:policy/AWSXRayDaemonWriteAccess"]
+  number_of_role_policy_arns                = 3
+  role_policy_arns              = [local.resource_dbpolicies[count.index],"arn:aws:iam::aws:policy/AWSXRayDaemonWriteAccess","arn:aws:iam::aws:policy/AWSAppMeshEnvoyAccess"]
   oidc_fully_qualified_subjects = ["system:serviceaccount:${local.environments[count.index]}:bookstore-resource-api-service-account"]
 }
 
@@ -72,7 +72,7 @@ module "iam_assumable_role_front_end" {
   create_role                   = true
   role_name                     = "${local.cluster_name}-${local.environments[count.index]}-sa-front-end-role"
   provider_url                  = replace(module.eks.cluster_oidc_issuer_url, "https://", "")
-  number_of_role_policy_arns                = 1
-  role_policy_arns              = ["arn:aws:iam::aws:policy/AWSXRayDaemonWriteAccess"]
+  number_of_role_policy_arns                = 2
+  role_policy_arns              = ["arn:aws:iam::aws:policy/AWSXRayDaemonWriteAccess","arn:aws:iam::aws:policy/AWSAppMeshEnvoyAccess"]
   oidc_fully_qualified_subjects = ["system:serviceaccount:${local.environments[count.index]}:bookstore-front-end-service-account"]
 }

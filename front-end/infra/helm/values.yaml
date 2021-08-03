@@ -17,6 +17,7 @@ fullnameOverride: ""
 serviceAccount:
   # Specifies whether a service account should be created
   create: true
+  roleARN: arn:aws:iam::319794837620:role/bookstore-eks-X7b6Bawd-development-sa-front-end-role
   # Annotations to add to the service account
   annotations: {}
   # The name of the service account to use.

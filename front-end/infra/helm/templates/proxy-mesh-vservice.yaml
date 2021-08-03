@@ -2,12 +2,12 @@
 apiVersion: appmesh.k8s.aws/v1beta2
 kind: VirtualService
 metadata:
-  name: {{ include "bookstore-resource-api.name" . }}-proxy-service
+  name: {{ include "bookstore-front-end.name" . }}-proxy-service
   namespace: {{ .Release.Namespace }}
 spec:
-  awsName: {{ include "bookstore-resource-api.name" . }}-proxy-service.{{ .Release.Namespace }}.svc.cluster.local
+  awsName: {{ include "bookstore-front-end.name" . }}-proxy-service.{{ .Release.Namespace }}.svc.cluster.local
   provider:
     virtualRouter:
       virtualRouterRef:
-        name: {{ include "bookstore-resource-api.name" . }}-proxy-virtual-router
+        name: {{ include "bookstore-front-end.name" . }}-proxy-virtual-router
 {{- end }}
