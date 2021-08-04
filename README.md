@@ -1,5 +1,21 @@
 # BookStore Web Application On AWS EKS
-A book store app powered by AWS EKS. Application is designed in microservices fashion running on EKS and integrating with other AWS Services.
+A book store app powered by AWS EKS. Application is designed in microservices fashion running on EKS and integrating with other AWS Services. This project was based on learning from [ACloudGuru](https://acloudguru.com/course/a-practical-guide-to-amazon-eks)
+
+## Key Features
+1. AWS Infrastructure (IaC) via Terraform.
+2. Microservice Style - APIs and Front End in different language.
+3. Docker Compose for local testing.
+4. Heml for Kubernetes Deployment.
+5. IRSA for Kubernetes using IAM.
+6. External DNS to manage Route53.
+7. ALB Controller for Load Balancing.
+8. App Mesh (Envoy) for Kubernetes.
+9. X-Ray for Tracing.
+10. CI/CD Pipeline for automated build and deployment of Kubernetes.
+
+## Architecture
+
+![alt Bookstore Architecture](Bookstore-EKS-Arch.jpg)
 
 ## Steps to run locally without build
 I have already shared images on Docker Hub which can be directly used to run the application locally.
@@ -132,4 +148,30 @@ B. kubectl apply -f .\auth-config.yaml
 
 **Note**- if Code Build is failing with error `toomanyrequests: You have reached your pull rate limit.`. You can run the job again after 5 min wait.
 
+## Sample images.
+1. Web Page-
+
+![alt Bookstore ](bookstore.PNG)
+
+2. X-Ray
+![alt Bookstore ](xray.PNG)
+
 ## Clean Up step.
+1. Delete namespaces. Go to `infrastructure\k8s-tooling\namespaces`
+```
+ kubectl delete -f development.yaml
+ kubectl delete -f prod.yaml
+ kubectl delete -f appmesh-system.yaml
+```
+2. Remove K8S. 
+```
+kubectl delete -f infrastructure\k8s-tooling\alb-controller\alb-ingress-controller.yaml
+kubectl delete -f infrastructure\k8s-tooling\external-dns\external-dns.yaml
+```
+3. Delete AwS resource from Terraform.
+- Go to each API Folder/infra/terraform and run `terraform destroy`
+- Go to  infrastructure\cicd\terraform and run `terraform destroy`
+- Go to infrastructure\eks\terraform and run `terraform destroy`
+
+
+
