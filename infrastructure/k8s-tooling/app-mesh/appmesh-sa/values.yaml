@@ -9,7 +9,7 @@ serviceAccount:
   # Specifies whether a service account should be created
   create: true
   # Annotations to add to the service account
-  roleARN: arn:aws:iam::319794837620:role/bookstore-eks-X7b6Bawd-sa-app-mesh-role
+  roleARN: arn:aws:iam::<ACCOUNT_ID>:role/bookstore-eks-X7b6Bawd-sa-app-mesh-role
   # The name of the service account to use.
   # If not set and create is true, a name is generated using the fullname template
   name: ""

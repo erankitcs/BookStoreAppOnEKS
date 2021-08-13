@@ -1,10 +1,10 @@
 # NOTE: When installing, please, update this file with the correct subdomain!
 
 image:
-  repository: 319794837620.dkr.ecr.us-west-2.amazonaws.com/bookstore-front-end
+  repository: <ACCOUNT_ID>.dkr.ecr.us-west-2.amazonaws.com/bookstore-front-end
   tag: 1.3.06c601ae
 serviceAccount:
-  roleARN: arn:aws:iam::319794837620:role/bookstore-eks-X7b6Bawd-development-sa-front-end-role
+  roleARN: arn:aws:iam::<ACCOUNT_ID>:role/bookstore-eks-X7b6Bawd-development-sa-front-end-role
 api:
   url: https://api.dev.bookstore.techenvision.net
   resource_api: https://resource-api.dev.bookstore.techenvision.net/
