@@ -140,6 +140,11 @@ app.get('/summary', function(request, response) {
 })
 app.use(AWSXRay.express.closeSegment());
 
+app.get('/health', function(request, response) {
+    response.json({ "Status": "Inventory API is up and running." })
+    })
+
+
 async function iterateResponsePromise(listOfResources, response) {
     async.map(listOfResources.data.data, function(item, callback) {
         // Set ID

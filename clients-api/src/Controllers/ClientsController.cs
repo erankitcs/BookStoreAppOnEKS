@@ -50,6 +50,15 @@ namespace AWS.EKS.Bookstore.Clients_API.Controllers
 
             return client;
         }
+
+        [Route("/health")]
+        [HttpGet("/health", Name = "HealthClient")]
+        public async Task<ActionResult<Client>> Get() 
+        {
+            return Ok("Clients API is up and running.");
+        }
+
+
         [HttpPost]
         public async Task<ActionResult<Client>> Create(Client client)
         {
