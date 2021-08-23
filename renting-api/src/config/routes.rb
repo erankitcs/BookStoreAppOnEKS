@@ -4,4 +4,5 @@ Rails.application.routes.draw do
   get '/list/by-client-id/:id', to: 'renting#list_by_client_id'
   post '/register', to: 'renting#register'
   put '/return/:id', to: 'renting#return'
+  get '/health', to: 'renting#health'
 end

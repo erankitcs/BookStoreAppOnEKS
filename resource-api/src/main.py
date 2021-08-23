@@ -102,6 +102,13 @@ def dynamodb_list():
     }
     return { 'data': response }, 200
 
+@app.route("/health", methods=['GET'])
+def health():
+    response = {
+        "Status": "Resource API is up and running."
+    }
+    return { 'data': response }, 200
+
 if __name__ == "__main__":
     app.run(host='0.0.0.0')
 
