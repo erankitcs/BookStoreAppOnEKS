@@ -33,7 +33,7 @@ services:
     renting-api:
         build: ./renting-api/src
         ports:
-          - "5004:3000"
+          - "5004:5004"
         environment:
           AWS_DEFAULT_REGION: us-west-2
           AWS_ACCESS_KEY_ID: ${AWS_ACCESS_KEY_ID}

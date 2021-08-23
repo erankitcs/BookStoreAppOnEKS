@@ -179,7 +179,7 @@ class RentingController < ApplicationController
         return resource['Name']
     end
 
-    def health()
+    def health
         begin
             @response = { 
                 "Status" => "Renting API is up and running."
