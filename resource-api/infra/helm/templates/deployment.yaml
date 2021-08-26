@@ -46,6 +46,8 @@ spec:
             - name: AWS_XRAY_SDK_ENABLED
               value: "false"
           livenessProbe:
+            failureThreshold: 3
+            periodSeconds: 10
             httpGet:
               path: /health
               port: http

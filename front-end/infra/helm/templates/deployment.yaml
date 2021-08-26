@@ -47,6 +47,8 @@ spec:
               mountPath: /usr/share/nginx/html/assets/json/config.json
               subPath: config.json
           livenessProbe:
+            failureThreshold: 3
+            periodSeconds: 10
             httpGet:
               path: /
               port: http

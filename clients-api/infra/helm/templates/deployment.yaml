@@ -42,6 +42,8 @@ spec:
             - name: ASPNETCORE_ENVIRONMENT
               value: {{ .Values.aspnet.environment }}
           livenessProbe:
+            failureThreshold: 3
+            periodSeconds: 10
             httpGet:
               path: /health
               port: http

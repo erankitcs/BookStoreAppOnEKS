@@ -46,6 +46,8 @@ spec:
             - name: AWS_DEFAULT_REGION
               value: {{ .Values.aws.region}}
           livenessProbe:
+            failureThreshold: 3
+            periodSeconds: 10
             httpGet:
               path: /health
               port: http
