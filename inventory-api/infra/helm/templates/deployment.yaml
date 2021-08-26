@@ -45,10 +45,10 @@ spec:
               value: {{ .Values.resourceapi.endpoint }}
             - name: AWS_DEFAULT_REGION
               value: {{ .Values.aws.region}}
-#          livenessProbe:
-#            httpGet:
-#              path: /
-#              port: http
+          livenessProbe:
+            httpGet:
+              path: /health
+              port: http
 #          readinessProbe:
 #            httpGet:
 #              path: /

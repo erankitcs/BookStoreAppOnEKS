@@ -46,10 +46,10 @@ spec:
             - name: {{ template "bookstore-front-end.fullname" . }}-config-file
               mountPath: /usr/share/nginx/html/assets/json/config.json
               subPath: config.json
-#          livenessProbe:
-#            httpGet:
-#              path: /
-#              port: http
+          livenessProbe:
+            httpGet:
+              path: /
+              port: http
 #          readinessProbe:
 #            httpGet:
 #              path: /

@@ -49,10 +49,10 @@ spec:
               value: {{ .Values.aws.region }}
             - name: RESOURCES_API_ENDPOINT
               value: {{ .Values.endpoints.resources }}
-#          livenessProbe:
-#            httpGet:
-#              path: /
-#              port: http
+          livenessProbe:
+            httpGet:
+              path: /health
+              port: http
 #          readinessProbe:
 #            httpGet:
 #              path: /

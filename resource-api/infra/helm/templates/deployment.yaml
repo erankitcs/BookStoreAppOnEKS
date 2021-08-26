@@ -45,10 +45,10 @@ spec:
               value: {{ .Values.aws.region}}
             - name: AWS_XRAY_SDK_ENABLED
               value: "false"
-#          livenessProbe:
-#            httpGet:
-#              path: /
-#              port: http
+          livenessProbe:
+            httpGet:
+              path: /health
+              port: http
 #          readinessProbe:
 #            httpGet:
 #              path: /

@@ -41,10 +41,10 @@ spec:
           env:
             - name: ASPNETCORE_ENVIRONMENT
               value: {{ .Values.aspnet.environment }}
-#          livenessProbe:
-#            httpGet:
-#              path: /
-#              port: http
+          livenessProbe:
+            httpGet:
+              path: /health
+              port: http
 #          readinessProbe:
 #            httpGet:
 #              path: /
