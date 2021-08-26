@@ -13,6 +13,7 @@ kubectl apply -f external-dns.yaml
 echo "----------Creating ALB Controller."
 cd $curdir/infrastructure/k8s-tooling/alb-controller
 kubectl apply -f alb-ingress-controller.yaml
+echo "----------Creating App Mesh Controller."
 cd $curdir/infrastructure/k8s-tooling/app-mesh/appmesh-sa
 helm upgrade --install --namespace appmesh-system bookstore-app-mesh .
 cd $curdir/infrastructure/k8s-tooling/app-mesh/appmesh-controller
@@ -20,3 +21,6 @@ cd $curdir/infrastructure/k8s-tooling/app-mesh/appmesh-controller
 cd $curdir/infrastructure/k8s-tooling/app-mesh/mesh
 kubectl apply -f development-mesh.yaml
 kubectl apply -f prod-mesh.yaml
+echo "----------Creating Metrics Server."
+cd $curdir/infrastructure/k8s-tooling/autoscaling-hpa-ca/
+./metric_server.sh
