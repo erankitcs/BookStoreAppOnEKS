@@ -23,4 +23,4 @@ kubectl apply -f development-mesh.yaml
 kubectl apply -f prod-mesh.yaml
 echo "----------Creating Metrics Server."
 cd $curdir/infrastructure/k8s-tooling/autoscaling-hpa-ca/
-./metric_server.sh
+./autoscale.sh
