@@ -2,14 +2,14 @@
 apiVersion: autoscaling/v2beta1
 kind: HorizontalPodAutoscaler
 metadata:
-  name: {{ include "bookstore-resource-api.name" . }}
+  name: {{ include "bookstore-front-end.name" . }}-proxy
   labels:
-    {{- include "bookstore-resource-api.labels" . | nindent 4 }}
+    {{- include "bookstore-front-end.labels" . | nindent 4 }}
 spec:
   scaleTargetRef:
     apiVersion: apps/v1
     kind: Deployment
-    name: {{ include "bookstore-resource-api.name" . }}
+    name: {{ include "bookstore-front-end.name" . }}-proxy
   minReplicas: {{ .Values.autoscaling.minReplicas }}
   maxReplicas: {{ .Values.autoscaling.maxReplicas }}
   metrics:
