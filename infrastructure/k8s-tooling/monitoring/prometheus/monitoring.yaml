@@ -1,0 +1,43 @@
+serverFiles:
+  alerts:
+    groups:
+    - name: nodes
+      rules:
+      - alert: TooManyNodes
+        expr: count(kube_node_info) > 2
+        for: 15m
+        labels:
+          severity: notify
+        annotations:
+          summary: Cluster increased
+          description: The number of the nodes in the cluster increased
+      - alert: TooFewNodes
+        expr: count(kube_node_info) < 1
+        for: 15m
+        labels:
+          severity: notify
+        annotations:
+          summary: Cluster decreased
+          description: The number of the nodes in the cluster decreased
+alertmanagerFiles:
+  alertmanager.yml:
+    global: {}
+    route:
+      group_wait: 10s
+      group_interval: 5m
+      receiver: slack
+      repeat_interval: 3h
+      routes:
+      - receiver: slack
+        repeat_interval: 5d
+        match:
+          severity: notify
+          frequency: low
+    receivers:
+    - name: slack
+      slack_configs:
+      - api_url: "<SLACK_HOOK_URL>"
+        send_resolved: true
+        title: "{{ .CommonAnnotations.summary }}"
+        text: "{{ .CommonAnnotations.description }}"
+        title_link: http://my-prometheus.com/alerts
