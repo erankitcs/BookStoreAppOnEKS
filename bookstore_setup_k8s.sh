@@ -28,3 +28,7 @@ cd $curdir/infrastructure/k8s-tooling/autoscaling-hpa-ca/
 echo "----------Creating Prometheus and Graphana for Monitoring and Alerting."
 cd $curdir/infrastructure/k8s-tooling/monitoring
 ./install.sh
+
+echo "----------Creating Network Policies to secure APIs."
+cd $curdir/infrastructure/k8s-tooling/network-policy
+./install.sh

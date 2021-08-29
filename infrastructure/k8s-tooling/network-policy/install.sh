@@ -12,10 +12,14 @@ echo "Applying default Deny into Developement and Production Namespace."
 kubectl apply -n development -f default-deny.yaml
 kubectl apply -n prod -f default-deny.yaml
 
-echo " Allow only Nginx (Proxy) to talk to Microservices-APIs"
+echo "Allow only Nginx (Proxy) to talk to Microservices-APIs"
 kubectl apply -n development -f allowProxytoAPI.yaml
 kubectl apply -n prod -f allowProxytoAPI.yaml
 
-echo " Allow communications between APIs."
-kubectl apply -n development -f allowApiToApi.yaml
-kubectl apply -n prod -f allowApiToApi.yaml
+echo "Allow Ingress for Renting API from other required APIs."
+kubectl apply -n development -f rentingapiPolicy.yaml
+kubectl apply -n prod -f rentingapiPolicy.yaml
+
+echo "Allow Ingress for Inventory API from other required APIs."
+kubectl apply -n development -f inventoryapiPolicy.yaml
+kubectl apply -n prod -f inventoryapiPolicy.yaml

@@ -1,0 +1,34 @@
+kind: NetworkPolicy
+apiVersion: networking.k8s.io/v1
+metadata:
+  name: rentingapi-policy
+spec:
+  podSelector:
+    matchLabels:
+      app.kubernetes.io/role: backendapi
+      app.kubernetes.io/name: bookstore-renting-api
+  ingress:
+    - from:
+        - podSelector:
+            matchLabels:
+              app.kubernetes.io/role: backendapi
+              app.kubernetes.io/name: bookstore-inventory-api
+      ports:
+        - protocol: TCP
+          port: 5001
+    - from:
+        - podSelector:
+            matchLabels:
+              app.kubernetes.io/role: backendapi
+              app.kubernetes.io/name: bookstore-clients-api
+      ports:
+        - protocol: TCP
+          port: 5003
+    - from:
+        - podSelector:
+            matchLabels:
+              app.kubernetes.io/role: backendapi
+              app.kubernetes.io/name: bookstore-resource-api
+      ports:
+        - protocol: TCP
+          port: 5000

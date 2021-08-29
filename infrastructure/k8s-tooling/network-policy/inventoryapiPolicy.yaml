@@ -1,22 +1,18 @@
 kind: NetworkPolicy
 apiVersion: networking.k8s.io/v1
 metadata:
-  name: proxytoapi-policy
+  name: inventoryapi-policy
 spec:
   podSelector:
     matchLabels:
       app.kubernetes.io/role: backendapi
+      app.kubernetes.io/name: bookstore-inventory-api
   ingress:
     - from:
         - podSelector:
             matchLabels:
-              app.kubernetes.io/role: frontend-proxy
+              app.kubernetes.io/role: backendapi
+              app.kubernetes.io/name: bookstore-resource-api
       ports:
         - protocol: TCP
           port: 5000
-        - protocol: TCP
-          port: 5001
-        - protocol: TCP
-          port: 5003
-        - protocol: TCP
-          port: 5004
