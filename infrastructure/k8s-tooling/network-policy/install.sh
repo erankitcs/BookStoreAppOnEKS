@@ -15,3 +15,7 @@ kubectl apply -n prod -f default-deny.yaml
 echo " Allow only Nginx (Proxy) to talk to Microservices-APIs"
 kubectl apply -n development -f allowProxytoAPI.yaml
 kubectl apply -n prod -f allowProxytoAPI.yaml
+
+echo " Allow communications between APIs."
+kubectl apply -n development -f allowApiToApi.yaml
+kubectl apply -n prod -f allowApiToApi.yaml
