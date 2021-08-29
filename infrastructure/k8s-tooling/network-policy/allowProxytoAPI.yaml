@@ -1,0 +1,16 @@
+kind: NetworkPolicy
+apiVersion: networking.k8s.io/v1
+metadata:
+  name: proxytoapi-policy
+spec:
+  podSelector:
+    matchLabels:
+      role: backendapi
+  ingress:
+    - from:
+        - podSelector:
+            matchLabels:
+              role: frontend-proxy
+      ports:
+        - protocol: TCP
+          port: 80

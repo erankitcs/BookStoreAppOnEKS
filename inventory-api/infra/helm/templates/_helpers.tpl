@@ -48,6 +48,7 @@ Selector labels
 {{- define "bookstore-inventory-api.selectorLabels" -}}
 app.kubernetes.io/name: {{ include "bookstore-inventory-api.name" . }}
 app.kubernetes.io/instance: {{ .Release.Name }}
+app.kubernetes.io/role: {{ .Values.appRole }}
 {{- end }}
 
 {{/*

@@ -48,6 +48,7 @@ Selector labels
 {{- define "bookstore-renting-api.selectorLabels" -}}
 app.kubernetes.io/name: {{ include "bookstore-renting-api.name" . }}
 app.kubernetes.io/instance: {{ .Release.Name }}
+app.kubernetes.io/role: {{ .Values.appRole }}
 {{- end }}
 
 {{/*

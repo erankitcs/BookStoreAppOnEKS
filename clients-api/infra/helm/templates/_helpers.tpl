@@ -48,6 +48,7 @@ Selector labels
 {{- define "bookstore-clients-api.selectorLabels" -}}
 app.kubernetes.io/name: {{ include "bookstore-clients-api.name" . }}
 app.kubernetes.io/instance: {{ .Release.Name }}
+app.kubernetes.io/role: {{ .Values.appRole }}
 {{- end }}
 
 {{/*

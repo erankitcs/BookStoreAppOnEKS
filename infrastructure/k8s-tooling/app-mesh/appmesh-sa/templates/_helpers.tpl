@@ -48,6 +48,7 @@ Selector labels
 {{- define "appmesh-controller.selectorLabels" -}}
 app.kubernetes.io/name: {{ include "appmesh-controller.name" . }}
 app.kubernetes.io/instance: {{ .Release.Name }}
+app.kubernetes.io/role: {{ .Values.appRole }}
 {{- end }}
 
 {{/*

@@ -21,6 +21,10 @@ cd $curdir/infrastructure/k8s-tooling/app-mesh/appmesh-controller
 cd $curdir/infrastructure/k8s-tooling/app-mesh/mesh
 kubectl apply -f development-mesh.yaml
 kubectl apply -f prod-mesh.yaml
-echo "----------Creating Metrics Server."
+echo "----------Creating Metrics Server for HPA and Cluster Autoscaler."
 cd $curdir/infrastructure/k8s-tooling/autoscaling-hpa-ca/
 ./autoscale.sh
+
+echo "----------Creating Prometheus and Graphana for Monitoring and Alerting."
+cd $curdir/infrastructure/k8s-tooling/monitoring
+./install.sh

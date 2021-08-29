@@ -48,6 +48,7 @@ Selector labels
 {{- define "bookstore-front-end.selectorLabels" -}}
 app.kubernetes.io/name: {{ include "bookstore-front-end.name" . }}
 app.kubernetes.io/instance: {{ .Release.Name }}
+app.kubernetes.io/role: {{ .Values.appRole }}
 {{- end }}
 
 {{/*
@@ -80,4 +81,5 @@ Selector labels - Proxy
 {{- define "bookstore-front-end-proxy.selectorLabels" -}}
 app.kubernetes.io/name: {{ include "bookstore-front-end.name" . }}-proxy
 app.kubernetes.io/instance: {{ .Release.Name }}
+app.kubernetes.io/role: {{ .Values.appRole }}-proxy
 {{- end }}
