@@ -87,3 +87,14 @@ module "iam_assumable_role_ca" {
   role_policy_arns              = [aws_iam_policy.capolicy.arn]
   oidc_fully_qualified_subjects = ["system:serviceaccount:kube-system:bookstore-ca-service-account"]
 }
+
+module "iam_assumable_role_fluentbit" {
+  source                        = "terraform-aws-modules/iam/aws//modules/iam-assumable-role-with-oidc"
+  version                       = "4.2.0"
+  create_role                   = true
+  role_name                     = "${local.cluster_name}-sa-fluent-bit-role"
+  provider_url                  = replace(module.eks.cluster_oidc_issuer_url, "https://", "")
+  number_of_role_policy_arns    = 1
+  role_policy_arns              = [aws_iam_policy.fbpolicy.arn]
+  oidc_fully_qualified_subjects = ["system:serviceaccount:kube-system:bookstore-fluent-bit-service-account"]
+}
