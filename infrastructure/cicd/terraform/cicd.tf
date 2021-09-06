@@ -91,7 +91,7 @@ output "cicd_clients_api_ecr" {
   value       = module.cicd_clients_api.ecr_url
 }
 
-output "cicd_cicd_front_end_repository_url" {
+output "cicd_front_end_repository_url" {
   description = "URL of Code Commit Repository for Front End."
   value       = module.cicd_front_end.repository_url
 }

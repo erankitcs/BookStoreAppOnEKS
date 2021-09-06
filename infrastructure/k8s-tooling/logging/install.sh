@@ -1,15 +1,8 @@
 echo "Creating Logging namespace."
 kubectl create namespace logging
-
-# We need to retrieve the Fluent Bit Role ARN
-export FLUENTBIT_ROLE="FLUENT_BIT_ROLE_ARN_HERE"
-
-# Get the Elasticsearch Endpoint
-export ES_ENDPOINT="ES_ENDPOINT_HERE"
-
-export ES_DOMAIN_USER="bookstore"
-
-export ES_DOMAIN_PASSWORD="ES_DOMAIN_PASSWORD_HERE"
+### These variables are being exported into their infrastructure deployment script in Terraform
+### bookstore_create_infra.sh
+# ES_KIBANA_ENDPOINT, ES_ENDPOINT, ES_DOMAIN_USER, ES_DOMAIN_PASSWORD,FLUENTBIT_ROLE
 
 # Update the Elasticsearch internal database
 curl -sS -u "${ES_DOMAIN_USER}:${ES_DOMAIN_PASSWORD}" \

@@ -2,6 +2,9 @@ variable "domain" {
   default = "bookstore"
 }
 
+provider "aws" {
+  region = "us-east-1"
+}
 
 data "aws_region" "current" {}
 
@@ -12,6 +15,11 @@ resource "random_password" "password" {
   special          = true
   override_special = "_%@"
   upper            = true
+  lower            = true
+  min_numeric      = 1
+  min_special      = 1
+  min_upper        = 1
+  min_lower        = 1
 }
 
 resource "aws_elasticsearch_domain" "es" {
@@ -38,14 +46,11 @@ resource "aws_elasticsearch_domain" "es" {
       "Action": "es:ESHttp*",
       "Principal": "*",
       "Effect": "Allow",
-      "Resource": "arn:aws:es:${data.aws_region.current.name}:${data.aws_caller_identity.current.account_id}:domain/${var.domain}/*",
+      "Resource": "arn:aws:es:${data.aws_region.current.name}:${data.aws_caller_identity.current.account_id}:domain/${var.domain}/*"
     }
   ]
 }
 POLICY
-cognito_options {
-    enabled = false
-}
 encrypt_at_rest {
     enabled = true
 }
@@ -71,5 +76,20 @@ tags = {
 
 output "es_password" {
   description = "Password for Elastic Search User."
-  value       = random_password.password.result
+  value       = aws_elasticsearch_domain.es.advanced_security_options[0].master_user_options[0].master_user_password
+}
+
+output "es_user" {
+  description = "Password for Elastic Search User."
+  value       = aws_elasticsearch_domain.es.advanced_security_options[0].master_user_options[0].master_user_name
+}
+
+output "es_endpoint" {
+  description = "Elastic Search Endpoint."
+  value       = aws_elasticsearch_domain.es.endpoint
+}
+
+output "es_kibana_endpoint" {
+  description = "Elastic Search Kibana Endpoint."
+  value       = aws_elasticsearch_domain.es.kibana_endpoint
 }

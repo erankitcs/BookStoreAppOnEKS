@@ -32,3 +32,8 @@ output "cluster_name" {
   description = "Kubernetes Cluster Name"
   value       = local.cluster_name
 }
+
+output "fluentbit_irsa_role" {
+  description = "Fluent Bit IAM Role for IRSA."
+  value       = module.iam_assumable_role_fluentbit.this_iam_role_arn
+}

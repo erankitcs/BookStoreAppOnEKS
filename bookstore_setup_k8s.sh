@@ -32,3 +32,7 @@ cd $curdir/infrastructure/k8s-tooling/monitoring
 echo "----------Creating Network Policies to secure APIs."
 cd $curdir/infrastructure/k8s-tooling/network-policy
 ./install.sh
+
+echo "----------Creating Logging Setup (FluentBit, Elasticsearch and Kibana)."
+cd $curdir/infrastructure/k8s-tooling/logging
+./install.sh
