@@ -1,6 +1,12 @@
+provider "aws" {
+  region = "us-east-1"
+}
+
 variable "domain" {
   default = "bookstore"
 }
+
+variable "vpc" {}
 
 variable "hosted_zone" {
     description = "Hosted Zone name for ACM and DNS."
@@ -8,13 +14,31 @@ variable "hosted_zone" {
     type    = string
 }
 
-provider "aws" {
-  region = "us-east-1"
+data "aws_vpc" "vpc" {
+  tags = {
+    Name = var.vpc
+  }
+}
+data "aws_subnet_ids" "privatesubnets" {
+  vpc_id = data.aws_vpc.vpc.id
+  tags = {
+    SubnetType = "private"
+  }
 }
 
 data "aws_region" "current" {}
 
 data "aws_caller_identity" "current" {}
+
+data "aws_route53_zone" "zone" {
+  name         = var.hosted_zone
+  private_zone = false
+}
+
+## Required for VPC and Certificate.
+#resource "aws_iam_service_linked_role" "es" {
+#  aws_service_name = "es.amazonaws.com"
+#}
 
 resource "random_password" "password" {
   length           = 8
@@ -28,8 +52,24 @@ resource "random_password" "password" {
   min_lower        = 1
 }
 
+resource "aws_security_group" "es" {
+  name        = "${var.vpc}-elasticsearch-${var.domain}"
+  description = "Elastic Search Security Group."
+  vpc_id      = data.aws_vpc.vpc.id
+
+  ingress {
+    from_port = 443
+    to_port   = 443
+    protocol  = "tcp"
+
+    cidr_blocks = [
+      data.aws_vpc.vpc.cidr_block,
+    ]
+  }
+}
+
 resource "aws_acm_certificate" "es_cert" {
-  domain_name       = "*es.bookstore.${var.hosted_zone}"
+  domain_name       = "*.es.bookstore.${var.hosted_zone}"
   validation_method = "DNS"
   subject_alternative_names = [
       "es.bookstore.${var.hosted_zone}"
@@ -42,12 +82,6 @@ resource "aws_acm_certificate" "es_cert" {
     create_before_destroy = true
   }
 }
-
-data "aws_route53_zone" "zone" {
-  name         = var.hosted_zone
-  private_zone = false
-}
-
 resource "aws_route53_record" "es_r53_records" {
   for_each = {
     for dvo in aws_acm_certificate.es_cert.domain_validation_options : dvo.domain_name => {
@@ -76,16 +110,25 @@ resource "aws_elasticsearch_domain" "es" {
   elasticsearch_version = "7.10"
 
   cluster_config {
-    instance_count = 1
+    ## Even number of nodes for two az deployment.
+    instance_count = 2
     instance_type = "t3.medium.elasticsearch"
     dedicated_master_enabled = false
-    zone_awareness_enabled   = false
+    ### Required for multiple subnets.
+    zone_awareness_enabled   = true
     warm_enabled             = false
   }
   ebs_options {
       ebs_enabled  = true
       volume_type  = "gp2"
       volume_size  = 100
+  }
+  vpc_options {
+    subnet_ids = [
+      for s in data.aws_subnet_ids.privatesubnets.ids : s
+    ]
+
+    security_group_ids = [aws_security_group.es.id]
   }
  access_policies = <<POLICY
 {
