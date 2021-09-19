@@ -15,3 +15,4 @@ Yourself (user-locked profile)
 ```
 3. Download OpenVPN Software from openvpn website.
 4. Import downloaded profile into openvpn software and connect.
+5. You can try to ssh into server with private IP address using key pair earlier created with user name as `openvpnas`
