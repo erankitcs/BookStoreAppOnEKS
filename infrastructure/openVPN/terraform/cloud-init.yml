@@ -1,0 +1,6 @@
+#cloud-config
+runcmd:
+  #  Cloudwatch Agent install
+  - sudo /usr/local/openvpn_as/scripts/sacli --key "vpn.server.routing.private_network.1" --value "${vpc_cidr}" ConfigPut
+  - sudo /usr/local/openvpn_as/scripts/sacli --user ${vpn_initial_username} --new_pass ${vpn_initial_password} SetLocalPassword
+  - sudo /usr/local/openvpn_as/scripts/sacli start

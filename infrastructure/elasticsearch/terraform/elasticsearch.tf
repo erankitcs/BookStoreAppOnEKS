@@ -19,6 +19,7 @@ data "aws_vpc" "vpc" {
     Name = var.vpc
   }
 }
+
 data "aws_subnet_ids" "privatesubnets" {
   vpc_id = data.aws_vpc.vpc.id
   tags = {
