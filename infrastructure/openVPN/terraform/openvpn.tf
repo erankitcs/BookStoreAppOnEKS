@@ -207,7 +207,7 @@ resource "aws_launch_template" "openvpn" {
   user_data = base64encode(data.template_file.cloud_init.rendered)
 }
 
-resource "aws_autoscaling_group" "bar" {
+resource "aws_autoscaling_group" "openvpn" {
   vpc_zone_identifier = data.aws_subnet_ids.publicsubnets.ids
   desired_capacity   = 1
   max_size           = 1
