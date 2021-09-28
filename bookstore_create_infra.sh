@@ -42,3 +42,8 @@ export ES_ENDPOINT=$(terraform output -raw es_endpoint)
 export ES_DOMAIN_USER=$(terraform output -raw es_user)
 export ES_DOMAIN_PASSWORD=$(terraform output -raw es_password)
 export AWS_REGION="us-west-2"
+
+echo "***** Step-4 - OpenVPN in AWS  *********"
+cd $curdir/infrastructure/openVPN/terraform
+terraform init -input=false
+terraform apply -input=false -auto-approve

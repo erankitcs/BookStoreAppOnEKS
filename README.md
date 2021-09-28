@@ -39,7 +39,10 @@ docker compose up
 ## Steps to Deploy into AWS Cloud using Helm.
 1. AWS CLI setup with Admin Role.
 2. Generate Code Commit Authentication from IAM.
-3. Update Hosted zone in file `infrastructure\eks\terraform\terraform.tfvars` and Run `bookstore_create_infra.sh` to create infrastructure.
+3. 
+- Update Hosted zone in file `infrastructure\eks\terraform\terraform.tfvars` 
+- Update details in file`infrastructure\openVPN\terraform\terraform.tfvars` for openVPN (required specifically for Elastic Search.). Read Readme.md file for more details about openVPN.
+- Run `bookstore_create_infra.sh` to create infrastructure.
 4. Update below files and run `bookstore_setup_k8s.sh`
 - Update Cluster Name `--cluster-name` in  `infrastructure\k8s-tooling\alb-controller\alb-ingress-controller.yaml` file.
 - Update Role ARN `roleARN` in `infrastructure\k8s-tooling\app-mesh\appmesh-sa\values.yaml` of Service Account for App Mesh. IAM Role ending with `sa-app-mesh-role`
